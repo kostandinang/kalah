@@ -1,0 +1,95 @@
+* {
+    font-family: Arial !important;
+}
+
+body {
+    background-color: #eaeaea;
+}
+
+#game-frame {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 800px;
+    height: 550px;
+    background-color: white;
+    margin: auto;
+    box-shadow: 0px 0px 10px 5px #ddd;
+}
+
+.game-title {
+    color: white;
+    background-color: #555;
+    padding: 18px;
+}
+
+form {
+    display: inline;
+}
+
+.title {
+    font-size: 20px;
+    background-color: red;
+    margin-left: -10px;
+    padding: 10px;
+}
+
+/* Boards */
+.board div {
+    float: left;
+    height: 490px;
+}
+
+.left-board {
+    width: 146px;
+    border-right: solid 2px #eaeaea;
+    background-color: #54b2ff;
+}
+
+.right-board {
+    width: 146px;
+    border-left: solid 2px #eaeaea;
+    background-color: #ff4349;
+}
+
+.center-board {
+    width: 500px;
+    height: 490px;
+}
+
+.top-center-board {
+    height: 245px !important;
+    border-bottom: solid 2px #eaeaea;
+    width: 500px;
+}
+
+.bottom-center-board {
+    height: 245px !important;
+    border-bottom: solid 2px #eaeaea;
+    width: 500px;
+}
+
+.top-center-board>div {
+    background-color: #54b2ff;
+}
+
+.bottom-center-board>div {
+    background-color: #ff4349;
+}
+
+.top-center-board>div, .bottom-center-board>div {
+    width: 60px;
+    height: 200px;
+    margin: 10px;
+}
+
+/* Game Graphics */
+.stone {
+    background-color: black;
+    width: 10px !important;
+    height: 10px !important;
+    margin: 5px;
+    border-radius: 100%;
+}

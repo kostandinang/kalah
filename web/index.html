@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<!-- Game Content -->
+<div id="game-frame">
+    <div class="game-title">
+        <span class="title">Kalah</span>
+        <form class="game-inputs" name="gameInputs">
+            <label>
+                Player 1:
+                <input name="player1Name" placeholder="Enter Name"/>
+            </label>
+            <label>
+                Player 2:
+                <input name="player2Name" placeholder="Enter Name"/>
+            </label>
+            <button type="button" id="start-game-btn">Start</button>
+        </form>
+        <span>Turn: </span>
+        <span id="player-turn-label"></span>
+    </div>
+    <div class="board">
+        <div class="left-board"></div>
+        <div class="center-board">
+            <div class="top-center-board">
+                <div id="tp6"></div>
+                <div id="tp5"></div>
+                <div id="tp4"></div>
+                <div id="tp3"></div>
+                <div id="tp2"></div>
+                <div id="tp1"></div>
+            </div>
+            <div class="bottom-center-board">
+                <div id="bp6"></div>
+                <div id="bp5"></div>
+                <div id="bp4"></div>
+                <div id="bp3"></div>
+                <div id="bp2"></div>
+                <div id="bp1"></div>
+            </div>
+        </div>
+        <div class="right-board"></div>
+    </div>
+</div>
+<!-- Styles -->
+<link rel="stylesheet" href="css/main.css" type="text/css"/>
+<!-- Scripts -->
+<script src="js/constants.js"></script>
+<script src="js/dom.js"></script>
+<script src="js/ajax.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/entities/player.js"></script>
+<script src="js/kalah.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
