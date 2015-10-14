@@ -7,6 +7,8 @@ var Constants = (function() {
         pitPlacement: {
             TOP: "TOP",
             BOTTOM: "BOTTOM"
-        }
+        },
+        REST_URL: "rest/next",
+        ERROR_MESSAGE: "Server Connection Error !"
     }
 })();

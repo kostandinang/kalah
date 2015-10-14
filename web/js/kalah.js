@@ -3,6 +3,7 @@ var Kalah = (function() {
     var config;
     var pits = {};
     var player1, player2;
+    var winner = null;
 
     /**
      * Starts the game
