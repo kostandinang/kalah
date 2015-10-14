@@ -1,0 +1,15 @@
+group 'kostandinangjellari.kalah'
+version '1.0.0'
+apply plugin: 'java'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'org.testng', name: 'testng', version: '+'
+    compile group: 'javax.servlet', name: 'servlet-api', version: '+'
+    compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet', version: '+'
+    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '+'
+}
