@@ -9,6 +9,7 @@
 <div id="game-frame">
     <div class="game-title">
         <span class="title">Kalah</span>
+
         <form class="game-inputs" name="gameInputs">
             <label>
                 Player 1:
@@ -24,7 +25,7 @@
         <span id="player-turn-label"></span>
     </div>
     <div class="board">
-        <div class="left-board"></div>
+        <div class="left-board" id="tp7"></div>
         <div class="center-board">
             <div class="top-center-board">
                 <div id="tp6"></div>
@@ -43,16 +44,18 @@
                 <div id="bp1"></div>
             </div>
         </div>
-        <div class="right-board"></div>
+        <div class="right-board" id="bp7"></div>
     </div>
 </div>
 <!-- Styles -->
 <link rel="stylesheet" href="css/main.css" type="text/css"/>
 <!-- Scripts -->
 <script src="js/constants.js"></script>
-<script src="js/dom.js"></script>
-<script src="js/ajax.js"></script>
-<script src="js/utils.js"></script>
+<script src="js/utils/render.js"></script>
+<script src="js/utils/ajax.js"></script>
+<script src="js/utils/utils.js"></script>
+<script src="js/entities/stone.js"></script>
+<script src="js/entities/pit.js"></script>
 <script src="js/entities/player.js"></script>
 <script src="js/kalah.js"></script>
 <script src="js/main.js"></script>
