@@ -30,6 +30,13 @@ public class Pit {
         return (stones == 0);
     }
 
+    /**
+     * Empties pit
+     */
+    public void emptyPit() {
+        this.stones = 0;
+    }
+
     public long getId() {
         return id;
     }

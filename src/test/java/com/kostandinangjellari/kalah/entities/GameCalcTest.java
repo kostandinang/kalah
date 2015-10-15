@@ -38,7 +38,7 @@ public class GameCalcTest {
     private Game getTestGame() {
         //Pits
         HashMap<Long, Pit> pits = new HashMap<>();
-        pits.put(1l, new Pit(1, 15, 0, false));
+        pits.put(1l, new Pit(1, 6, 0, false));
         pits.put(2l, new Pit(2, 6, 0, false));
         pits.put(3l, new Pit(3, 6, 0, false));
         pits.put(4l, new Pit(4, 6, 0, false));
@@ -47,7 +47,7 @@ public class GameCalcTest {
         pits.put(7l, new Pit(7, 0, 0, true));
         pits.put(8l, new Pit(8, 6, 1, false));
         pits.put(9l, new Pit(9, 6, 1, false));
-        pits.put(10l, new Pit(10, 6,1, false));
+        pits.put(10l, new Pit(10, 6, 1, false));
         pits.put(11l, new Pit(11, 6, 1, false));
         pits.put(12l, new Pit(12, 6, 1, false));
         pits.put(13l, new Pit(13, 6, 1, false));
@@ -58,7 +58,7 @@ public class GameCalcTest {
         //Game
         Game game = new Game(player1, player2, pits);
         game.setActivePlayer(player1);
-        game.setCurrentPit(pits.get(1l));
+        game.setCurrentPit(pits.get(9l));
         return game;
     }
 }
