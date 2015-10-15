@@ -10,12 +10,12 @@ import java.util.ArrayList;
  */
 public class Pit {
 
-    private short id;
-    private short playerId;
-    private short stones;
+    private long id;
+    private long playerId;
+    private long stones;
     private boolean isKalah;
 
-    public Pit(short id, short stones, short playerId, boolean isKalah) {
+    public Pit(long id, long stones, long playerId, boolean isKalah) {
         this.id = id;
         this.playerId = playerId;
         this.stones = stones;
@@ -29,7 +29,7 @@ public class Pit {
      * @param pits
      * @return
      */
-    public static Pit getPitById(short id, ArrayList<Pit> pits) {
+    public static Pit getPitById(long id, ArrayList<Pit> pits) {
         for (Pit pit : pits) {
             if (id == pit.getId()) {
                 return pit;
@@ -47,27 +47,27 @@ public class Pit {
         return (stones == 0);
     }
 
-    public short getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(short id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public short getPlayer() {
+    public long getPlayer() {
         return playerId;
     }
 
-    public void setPlayer(short player) {
+    public void setPlayer(long player) {
         this.playerId = player;
     }
 
-    public short getStones() {
+    public long getStones() {
         return stones;
     }
 
-    public void setStones(short stones) {
+    public void setStones(long stones) {
         this.stones = stones;
     }
 

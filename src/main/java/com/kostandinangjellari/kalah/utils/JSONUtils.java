@@ -37,13 +37,13 @@ public class JSONUtils {
      * @param playerNumber
      * @return
      */
-    public static Player getPlayerFromJson(JSONArray playerJsonArray, short playerNumber) {
+    public static Player getPlayerFromJson(JSONArray playerJsonArray, long playerNumber) {
         Player player = null;
         if (playerJsonArray.size() > 0) {
-            JSONObject playerJsonObject = (JSONObject) playerJsonArray.get(playerNumber);
+            JSONObject playerJsonObject = (JSONObject) playerJsonArray.get((int)playerNumber);
             player = new Player(
                     (String)playerJsonObject.get(Keys.NAME),
-                    (Short) playerJsonObject.get(Keys.ID)
+                    (Long) playerJsonObject.get(Keys.ID)
             );
         }
         return player;
@@ -63,9 +63,9 @@ public class JSONUtils {
                 //Add pit
                 pitJsonObject = (JSONObject) iterator.next();
                 Pit pit = new Pit(
-                        (Short) pitJsonObject.get(Keys.PIT_ID),
-                        (Short) pitJsonObject.get(Keys.STONES),
-                        (Short) pitJsonObject.get(Keys.PLAYER_ID),
+                        (Long) pitJsonObject.get(Keys.ID),
+                        (Long) pitJsonObject.get(Keys.STONES),
+                        (Long) pitJsonObject.get(Keys.PLAYER_ID),
                         (Boolean) pitJsonObject.get(Keys.IS_KALAH)
                 );
                 pits.add(pit);

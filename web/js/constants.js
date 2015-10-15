@@ -8,7 +8,7 @@ var Constants = (function() {
             TOP: "TOP",
             BOTTOM: "BOTTOM"
         },
-        REST_URL: "rest/next",
+        REST_URL: "rest/play",
         ERROR_MESSAGE: "Server Connection Error !"
     }
 })();

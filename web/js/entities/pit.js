@@ -1,18 +1,9 @@
-var Pit = function(id, player, isKalah, nextMoveCallback, moveExitCallback) {
+var Pit = function(id, player, isKalah) {
     this.id = id;
     this.stones = [];
     this.player = player;
     this.isKalah = isKalah;
-    this.nextMove = player.isActive;
     this.pitPlacement;
-    /**
-     * Add pit Mouse Listener
-     */
-    if (this.nextMove && !this.isEmpty()) {
-        this.addMouseListener(nextMoveCallback);
-    } else {
-        this.removeMouseListener(moveExitCallback)
-    }
 };
 
 Pit.prototype.addStone = function(stone) {
@@ -28,8 +19,7 @@ Pit.prototype.isEmpty = function() {
 };
 
 Pit.prototype.getPitDomId = function() {
-    var idPrefix = (this.player.number == 0) ? "tp" : "bp";
-    return idPrefix + this.id;
+    return "pit-" + this.id;
 };
 
 Pit.prototype.getDomElement = function() {
@@ -37,17 +27,19 @@ Pit.prototype.getDomElement = function() {
 };
 
 Pit.prototype.addMouseListener = function(clickCallback) {
+    var self = this;
     if (!this.isKalah) {
         this.getDomElement().addEventListener("click", function() {
-            clickCallback(this);
+            clickCallback(self);
         })
     }
 };
 
 Pit.prototype.removeMouseListener = function(clickCallback) {
+    var self = this;
     if (!this.isKalah) {
         this.getDomElement().removeEventListener("click", function() {
-            clickCallback(this);
+            clickCallback(self);
         })
     }
 };
