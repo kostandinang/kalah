@@ -9,7 +9,7 @@ import com.kostandinangjellari.kalah.utils.JSONUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Title: kalah
@@ -41,7 +41,7 @@ public class KalahController {
          * Get Pits
          */
         JSONArray pitsJsonArray = (JSONArray) iputGameJson.get(Keys.PITS);
-        ArrayList<Pit> pits = JSONUtils.getPitsFromJson(pitsJsonArray);
+        HashMap<Long, Pit> pits = JSONUtils.getPitsFromJson(pitsJsonArray);
         /**
          * Get players
          */
@@ -61,7 +61,7 @@ public class KalahController {
          * Set currentPit
          */
         long currentPitId = (Long) iputGameJson.get(Keys.CURRENT_PIT);
-        game.setCurrentPit(Pit.getPitById(currentPitId, game.getPits()));
+        game.setCurrentPit(pits.get(currentPitId));
         return game;
     }
 

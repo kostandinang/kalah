@@ -1,7 +1,5 @@
 package com.kostandinangjellari.kalah.entities;
 
-import java.util.ArrayList;
-
 /**
  * Title: kalah
  * Author: Kostandin Angjellari
@@ -21,22 +19,6 @@ public class Pit {
         this.playerId = playerId;
         this.stones = stones;
         this.isKalah = isKalah;
-    }
-
-    /**
-     * Returns pit by Id
-     *
-     * @param id
-     * @param pits
-     * @return
-     */
-    public static Pit getPitById(long id, ArrayList<Pit> pits) {
-        for (Pit pit : pits) {
-            if (id == pit.getId()) {
-                return pit;
-            }
-        }
-        return null;
     }
 
     /**
