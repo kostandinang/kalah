@@ -1,5 +1,12 @@
 package com.kostandinangjellari.kalah.constants;
 
+/**
+ * Title: kalah
+ * Author: Kostandin Angjellari
+ * Date: 10/15/2015.
+ * Copyright 2015
+ */
+
 public class Keys {
     public static String GAME_STATE = "game_state";
     public static String PLAYERS = "players";

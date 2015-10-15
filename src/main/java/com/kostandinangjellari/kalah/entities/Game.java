@@ -2,6 +2,13 @@ package com.kostandinangjellari.kalah.entities;
 
 import java.util.ArrayList;
 
+/**
+ * Title: kalah
+ * Author: Kostandin Angjellari
+ * Date: 10/15/2015.
+ * Copyright 2015
+ */
+
 public class Game {
 
     private Player player1;

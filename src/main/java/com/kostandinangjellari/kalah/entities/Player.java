@@ -1,5 +1,12 @@
 package com.kostandinangjellari.kalah.entities;
 
+/**
+ * Title: kalah
+ * Author: Kostandin Angjellari
+ * Date: 10/15/2015.
+ * Copyright 2015
+ */
+
 public class Player {
 
     private String name;

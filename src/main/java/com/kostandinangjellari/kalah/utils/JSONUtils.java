@@ -13,6 +13,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Logger;
 
+/**
+ * Title: kalah
+ * Author: Kostandin Angjellari
+ * Date: 10/15/2015.
+ * Copyright 2015
+ */
+
 public class JSONUtils {
 
     /**

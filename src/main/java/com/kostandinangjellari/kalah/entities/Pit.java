@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * Date: 10/13/2015.
  * Copyright 2015
  */
+
 public class Pit {
 
     private long id;
