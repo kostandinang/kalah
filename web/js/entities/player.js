@@ -1,5 +1,4 @@
-var Player = function(playerName, playerNumber) {
+var Player = function(playerName, id) {
     this.name = playerName;
-    this.number = playerNumber;
-    this.isActive = false;
+    this.id = id;
 };

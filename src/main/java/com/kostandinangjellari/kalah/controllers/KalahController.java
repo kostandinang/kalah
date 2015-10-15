@@ -21,6 +21,11 @@ public class KalahController {
      */
     public static JSONObject next(JSONObject gameStateJson) {
         JSONObject gameStateResult = new JSONObject();
+        initGameFromGameState(gameStateJson);
+        return gameStateResult;
+    }
+
+    private static void initGameFromGameState(JSONObject gameStateJson) {
         /**
          * Get Pits
          */
@@ -30,8 +35,8 @@ public class KalahController {
          * Get players
          */
         JSONArray playersJsonArray = (JSONArray) gameStateJson.get(Keys.PLAYERS);
-        Player player1 = JSONUtils.getPlayerFromJson(playersJsonArray, (short) 0);
-        Player player2 = JSONUtils.getPlayerFromJson(playersJsonArray, (short) 1);
+        Player player1 = JSONUtils.getPlayerFromJson(playersJsonArray, 0);
+        Player player2 = JSONUtils.getPlayerFromJson(playersJsonArray, 1);
         /**
          * Create Game
          */
@@ -39,15 +44,13 @@ public class KalahController {
         /**
          * Get Active Player
          */
-        short activePlayer = (Short) gameStateJson.get(Keys.ACTIVE_PLAYER);
+        long activePlayer = (Long) gameStateJson.get(Keys.ACTIVE_PLAYER);
         game.setActivePlayer((activePlayer == 0) ? player1 : player2);
         /**
          * Set currentPit
          */
-        short currentPitId = (Short) gameStateJson.get(Keys.CURRENT_PIT);
+        long currentPitId = (Long) gameStateJson.get(Keys.CURRENT_PIT);
         game.setCurrentPit(Pit.getPitById(currentPitId, game.getPits()));
-
-        return gameStateResult;
     }
 
 }

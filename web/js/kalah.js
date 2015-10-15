@@ -1,8 +1,11 @@
 var Kalah = (function() {
 
     var config;
-    var pits = {};
+    var pitsNodes = [];
+    var pits = [];
     var player1, player2;
+    var activePlayer;
+    var currentPit;
     var winner = null;
 
     /**
@@ -11,7 +14,7 @@ var Kalah = (function() {
     function startGame() {
         createPlayers();
         initPits();
-        console.log(pits);
+        console.log(pitsNodes);
     }
 
     /**
@@ -19,9 +22,9 @@ var Kalah = (function() {
      */
     function createPlayers() {
         player1 = new Player(config.player1Name, 0);
-        player1.isActive = true;
         player2 = new Player(config.player2Name, 1);
-        Render.setActivePlayerLabel(player1.name);
+        activePlayer = player1;
+        Render.setActivePlayerLabel(activePlayer.name);
     }
 
     /**
@@ -29,21 +32,20 @@ var Kalah = (function() {
      * Set to global var pits and add initial stones
      */
     function initPits() {
-        //Add top pits
-        pits["topPits"] = {};
-        pits["bottomPits"] = {};
-        for (var i = 1; i <= config.pitNumber; i++) {
+        var isKalahPit = false;
+        var p2PitId = 0;
+        for (var i = 1; i <= config.pitNumber + 1; i++) {
             //Create player pits
-            var p1Pit = createPit(i, player1, false, pits.topPits);
-            var p2Pit = createPit(i, player2, false, pits.bottomPits);
+            isKalahPit = (i == config.pitNumber + 1);
+            p2PitId = config.pitNumber + 1 + i;
+            var p1Pit = createPit(i, player1, isKalahPit);
+            var p2Pit = createPit(p2PitId, player2, isKalahPit);
             //Draws Stones to top and bottom pits
-            drawStonesToPit(pits.topPits[p1Pit.getPitDomId()], i);
-            drawStonesToPit(pits.bottomPits[p2Pit.getPitDomId()], i*2);
+            if (!isKalahPit) {
+                addStonesToPit(p1Pit, i);
+                addStonesToPit(p2Pit, i*2);
+            }
         }
-        //Create Kalah Pits
-        var kalahPitIndex = config.pitNumber + 1;
-        createPit(kalahPitIndex, player1, true, pits.topPits);
-        createPit(kalahPitIndex, player2, true, pits.bottomPits);
     }
 
     /**
@@ -55,15 +57,23 @@ var Kalah = (function() {
      * @param pitPlacement
      * @returns {Pit}
      */
-    function createPit(pitIndex, player, isKalah, pitPlacement) {
-        var playerPit = new Pit(pitIndex, player, isKalah, function(pit) {
+    function createPit(pitIndex, player, isKalah) {
+        var playerPit = new Pit(pitIndex, player, isKalah);
+        pits.push(playerPit);
+        /**
+         * Add pit mouse listener
+         */
+        playerPit.addMouseListener(function(pit) {
             console.log(pit.id);
-            player2.isActive = true;
-            player1.isActive = false;
-            deactivatePits(pits.topPits);
-            activatePits(pits.bottomPits);
+            currentPit = pit;
+            activePlayer = currentPit.player;
+            /**
+             * Next Move
+             */
+            Rest.getNextGameState(KalahFactory.buildStateObject(pits, [player1, player2], activePlayer, currentPit));
+            /*deactivatePits(pits.topPits);
+             activatePits(pits.bottomPits);*/
         });
-        pitPlacement[playerPit.getPitDomId()] = playerPit.getDomElement();
         return playerPit;
     }
 
@@ -82,12 +92,13 @@ var Kalah = (function() {
      * @param topPit
      * @param bottomPit
      */
-    function drawStonesToPit(pitPlacement, stoneGroupId) {
+    function addStonesToPit(pit, stoneGroupId) {
         var currentStone;
         for (var stoneIndex = 0; stoneIndex < config.stoneNumber; stoneIndex++) {
             var stoneId = stoneGroupId * config.stoneNumber + stoneIndex;
             currentStone = new Stone(stoneId);
-            pitPlacement.appendChild(Render.createStone(stoneId));
+            pit.addStone(currentStone);
+            pit.getDomElement().appendChild(Render.createStone(stoneId));
         }
     }
 

@@ -3,9 +3,9 @@ package com.kostandinangjellari.kalah.entities;
 public class Player {
 
     private String name;
-    private short id;
+    private long id;
 
-    public Player(String name, short id) {
+    public Player(String name, long id) {
         this.name = name;
         this.id = id;
     }
@@ -18,11 +18,11 @@ public class Player {
         this.name = name;
     }
 
-    public short getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(short id) {
+    public void setId(long id) {
         this.id = id;
     }
 
