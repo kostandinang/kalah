@@ -1,13 +1,12 @@
 package com.kostandinangjellari.kalah.entities;
 
-import java.util.ArrayList;
-
 /**
  * Title: kalah
  * Author: Kostandin Angjellari
  * Date: 10/13/2015.
  * Copyright 2015
  */
+
 public class Pit {
 
     private long id;
@@ -23,28 +22,19 @@ public class Pit {
     }
 
     /**
-     * Returns pit by Id
-     *
-     * @param id
-     * @param pits
-     * @return
-     */
-    public static Pit getPitById(long id, ArrayList<Pit> pits) {
-        for (Pit pit : pits) {
-            if (id == pit.getId()) {
-                return pit;
-            }
-        }
-        return null;
-    }
-
-    /**
      * Checks if pit is empty
      *
      * @return True if pit is empty
      */
     public boolean isEmptyPit() {
         return (stones == 0);
+    }
+
+    /**
+     * Empties pit
+     */
+    public void emptyPit() {
+        this.stones = 0;
     }
 
     public long getId() {

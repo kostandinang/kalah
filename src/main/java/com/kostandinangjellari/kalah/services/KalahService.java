@@ -11,16 +11,23 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+/**
+ * Title: kalah
+ * Author: Kostandin Angjellari
+ * Date: 10/15/2015.
+ * Copyright 2015
+ */
+
 @Path("/play")
 public class KalahService {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response test(
-            @FormParam("game_state") String gameStateJsonString
+            @FormParam("game_state") String requestGameJsonString
     ) {
-        JSONObject gameStateJson = JSONUtils.getJsonObjectFromJsonString(gameStateJsonString);
-        JSONObject jsonObject = KalahController.next(gameStateJson);
+        JSONObject requestGameJson = JSONUtils.getJsonObjectFromJsonString(requestGameJsonString);
+        JSONObject responseGameJson = KalahController.next(requestGameJson);
         return Response.ok().entity(String.class).build();
     }
 }

@@ -1,18 +1,25 @@
 package com.kostandinangjellari.kalah.entities;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+
+/**
+ * Title: kalah
+ * Author: Kostandin Angjellari
+ * Date: 10/15/2015.
+ * Copyright 2015
+ */
 
 public class Game {
 
     private Player player1;
     private Player player2;
     private Player activePlayer;
-    private ArrayList<Pit> pits;
+    private HashMap<Long, Pit> pits;
     private Pit currentPit;
     private boolean isFinished;
 
 
-    public Game(Player player1, Player player2, ArrayList<Pit> pits) {
+    public Game(Player player1, Player player2, HashMap<Long, Pit> pits) {
         this.player1 = player1;
         this.player2 = player2;
         this.pits = pits;
@@ -65,11 +72,11 @@ public class Game {
         return activePlayer;
     }
 
-    public ArrayList<Pit> getPits() {
+    public HashMap<Long, Pit> getPits() {
         return pits;
     }
 
-    public void setPits(ArrayList<Pit> pits) {
+    public void setPits(HashMap<Long, Pit> pits) {
         this.pits = pits;
     }
 
