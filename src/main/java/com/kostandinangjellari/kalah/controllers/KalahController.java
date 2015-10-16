@@ -2,7 +2,7 @@ package com.kostandinangjellari.kalah.controllers;
 
 import com.kostandinangjellari.kalah.constants.Keys;
 import com.kostandinangjellari.kalah.entities.Game;
-import com.kostandinangjellari.kalah.entities.GameCalc;
+import com.kostandinangjellari.kalah.entities.Kalah;
 import com.kostandinangjellari.kalah.entities.Pit;
 import com.kostandinangjellari.kalah.entities.Player;
 import com.kostandinangjellari.kalah.utils.JSONUtils;
@@ -22,16 +22,17 @@ public class KalahController {
 
     /**
      * Builds the game and calculates next game state
-     * @param gameStateJson
+     * @param gameInputJson
      * @return next game state json configuration
      */
-    public static JSONObject next(JSONObject gameStateJson) {
+    public static JSONObject next(JSONObject gameInputJson) {
         JSONObject gameStateResult = new JSONObject();
-        Game game = initGameFromGameState(gameStateJson);
+        Game game = initGameFromGameState(gameInputJson);
         /**
          * Get next game state
          */
-        game = GameCalc.getNextGame(game);
+        game = Kalah.getNextGame(game);
+        //TODO - Generate gameOutputJson
         return gameStateResult;
     }
 

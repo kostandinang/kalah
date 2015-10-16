@@ -14,42 +14,26 @@ public class Game {
     private Player player1;
     private Player player2;
     private Player activePlayer;
+    private Player winnerPlayer;
     private HashMap<Long, Pit> pits;
     private Pit currentPit;
-    private boolean isFinished;
-
 
     public Game(Player player1, Player player2, HashMap<Long, Pit> pits) {
         this.player1 = player1;
         this.player2 = player2;
         this.pits = pits;
-        isFinished = false;
+        this.winnerPlayer = null;
     }
 
     /**
      * Set game players
+     *
      * @param player1
      * @param player2
      */
     public void setPlayers(Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
-    }
-
-    /**
-     * Sets active player
-     * @param player
-     */
-    public void setActivePlayer(Player player) {
-        this.activePlayer = player;
-    }
-
-    /**
-     *
-     * @param pit
-     */
-    public void setCurrentPit(Pit pit) {
-        this.currentPit = pit;
     }
 
     public Player getPlayer1() {
@@ -72,6 +56,10 @@ public class Game {
         return activePlayer;
     }
 
+    public void setActivePlayer(Player player) {
+        this.activePlayer = player;
+    }
+
     public HashMap<Long, Pit> getPits() {
         return pits;
     }
@@ -84,11 +72,15 @@ public class Game {
         return currentPit;
     }
 
-    public boolean isFinished() {
-        return isFinished;
+    public void setCurrentPit(Pit pit) {
+        this.currentPit = pit;
     }
 
-    public void setIsFinished(boolean isFinished) {
-        this.isFinished = isFinished;
+    public Player getWinnerPlayer() {
+        return winnerPlayer;
+    }
+
+    public void setWinnerPlayer(Player winnerPlayer) {
+        this.winnerPlayer = winnerPlayer;
     }
 }

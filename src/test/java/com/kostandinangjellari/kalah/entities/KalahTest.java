@@ -11,13 +11,13 @@ import java.util.HashMap;
  * Date: 10/15/2015.
  * Copyright 2015
  */
-public class GameCalcTest {
+public class KalahTest {
 
     @Test
     public void testGetNextGame() throws Exception {
         Player player1 = new Player("Kostandin", 0);
         Player player2 = new Player("Kostandin's Opponent", 1);
-        Assert.assertTrue(GameCalc.isOtherPlayerKalah(player1, new Pit(0, 5, player2.getId(), true)));
+        Assert.assertTrue(Kalah.isOtherPlayerKalah(player1, new Pit(0, 5, player2.getId(), true)));
     }
 
     @Test
@@ -32,9 +32,13 @@ public class GameCalcTest {
 
     @Test
     public void testSeedStones() throws Exception {
-        GameCalc.seedStones(getTestGame());
+        Kalah.seedStones(getTestGame());
     }
 
+    /**
+     * Gets a testing game configuration
+     * @return Game
+     */
     private Game getTestGame() {
         //Pits
         HashMap<Long, Pit> pits = new HashMap<>();

@@ -12,10 +12,10 @@ import com.kostandinangjellari.kalah.constants.GameConfig;
 import java.util.logging.Logger;
 
 /**
- * GameCalc processes game rules and logic and
+ * Kalah processes game rules and logic and
  * calculates next game state
  */
-public class GameCalc {
+public class Kalah {
     private static Game game;
 
     /**
@@ -68,12 +68,36 @@ public class GameCalc {
                 }
                 Logger.getAnonymousLogger().info(String.valueOf(nextPit.getId()));
             }
+            /**
+             * Sets active player as winner if game has finished
+             */
+            if (hasGameFinished()) {
+                game.setWinnerPlayer(activePlayer);
+            }
         }
+    }
+
+    /**
+     * Checks if game has finished
+     * @return true if player has empty pits, false otherwiase
+     */
+    private static boolean hasGameFinished() {
+        boolean hasFinished = true;
+        for (long pitId : game.getPits().keySet()) {
+            if (pitId < getPlayerKalah(game.getActivePlayer()).getId()) {
+                if (!game.getPits().get(pitId).isEmptyPit()) {
+                    hasFinished = false;
+                    break;
+                }
+            }
+        }
+        return hasFinished;
     }
 
     /**
      * Removes stones from player pit and parallell
      * other player pit and seeds them into player's Kalah
+     *
      * @param pit
      * @param player
      */
@@ -89,6 +113,7 @@ public class GameCalc {
     /**
      * Gets other player pit in parallell direction
      * with current pit
+     *
      * @param pit
      * @param player
      * @return
@@ -100,6 +125,7 @@ public class GameCalc {
 
     /**
      * Gets opponent of the given player
+     *
      * @param player
      * @return
      */
@@ -109,14 +135,16 @@ public class GameCalc {
 
     /**
      * Gets total Pit Number
+     *
      * @return
      */
     private static int getTotalPitNumber() {
-        return GameConfig.PIT_NUMBER * 2 + 2;
+        return GameConfig.PIT_PER_PLAYER * 2 + 2;
     }
 
     /**
      * Checks if this pit is Kalah of the opponent
+     *
      * @param currentPlayer
      * @param pit
      * @return
@@ -127,21 +155,23 @@ public class GameCalc {
 
     /**
      * Gets the first id of the player's pit
+     *
      * @param player
      * @return
      */
     public static long getPlayerFirstPitId(Player player) {
-        return (player.getId() == 0) ? 1 : GameConfig.PIT_NUMBER + 2;
+        return (player.getId() == 0) ? 1 : GameConfig.PIT_PER_PLAYER + 2;
     }
 
     /**
      * Gets player Kalah
+     *
      * @param player
      * @return
      */
     public static Pit getPlayerKalah(Player player) {
         return (player.getId() == 0) ?
-                game.getPits().get(GameConfig.PIT_NUMBER + 1) :
+                game.getPits().get(GameConfig.PIT_PER_PLAYER + 1) :
                 game.getPits().get(getTotalPitNumber());
     }
 

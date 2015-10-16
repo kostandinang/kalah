@@ -2,6 +2,7 @@ package com.kostandinangjellari.kalah.utils;
 
 import com.kostandinangjellari.kalah.constants.Keys;
 import com.kostandinangjellari.kalah.constants.Logs;
+import com.kostandinangjellari.kalah.entities.Game;
 import com.kostandinangjellari.kalah.entities.Pit;
 import com.kostandinangjellari.kalah.entities.Player;
 import org.json.simple.JSONArray;
@@ -24,6 +25,7 @@ public class JSONUtils {
 
     /**
      * Gets Json Object from Json String
+     *
      * @param jsonString
      * @return
      */
@@ -40,6 +42,7 @@ public class JSONUtils {
 
     /**
      * Gets player from Game State object
+     *
      * @param playerJsonArray
      * @param playerNumber
      * @return
@@ -47,9 +50,9 @@ public class JSONUtils {
     public static Player getPlayerFromJson(JSONArray playerJsonArray, long playerNumber) {
         Player player = null;
         if (playerJsonArray.size() > 0) {
-            JSONObject playerJsonObject = (JSONObject) playerJsonArray.get((int)playerNumber);
+            JSONObject playerJsonObject = (JSONObject) playerJsonArray.get((int) playerNumber);
             player = new Player(
-                    (String)playerJsonObject.get(Keys.NAME),
+                    (String) playerJsonObject.get(Keys.NAME),
                     (Long) playerJsonObject.get(Keys.ID)
             );
         }
@@ -58,6 +61,7 @@ public class JSONUtils {
 
     /**
      * Gets array of pits from json array object
+     *
      * @param pitsJsonArray
      * @return
      */
@@ -80,5 +84,17 @@ public class JSONUtils {
             }
         }
         return pits;
+    }
+
+    /**
+     * Gets JsonObject from game
+     *
+     * @param game
+     * @return
+     */
+    public static JSONObject getJsonFromGame(Game game) {
+        JSONObject resultJson = new JSONObject();
+        //TODO - Add Game to Json response
+        return resultJson;
     }
 }

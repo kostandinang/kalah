@@ -8,7 +8,6 @@ package com.kostandinangjellari.kalah.constants;
  */
 
 public class Keys {
-    public static String GAME_STATE = "game_state";
     public static String PLAYERS = "players";
     public static String NAME = "name";
     public static String ID = "id";
