@@ -7,6 +7,7 @@ package com.kostandinangjellari.kalah.constants;
  * Copyright 2015
  */
 
-public class Logs {
+public class GameStrings {
     public static String JSON_PARSE_ERROR = "Could not parse Json !";
+    public static String INVALID_MOVE_EXCEPTION = "Invalid Move !";
 }

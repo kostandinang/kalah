@@ -7,34 +7,34 @@ package com.kostandinangjellari.kalah.entities;
  * Copyright 2015
  */
 
-public class Pit {
+public class House {
 
     private long id;
     private long playerId;
-    private long stones;
+    private long numberOfSeeds;
     private boolean isKalah;
 
-    public Pit(long id, long stones, long playerId, boolean isKalah) {
+    public House(long id, long numberOfSeeds, long playerId, boolean isKalah) {
         this.id = id;
         this.playerId = playerId;
-        this.stones = stones;
+        this.numberOfSeeds = numberOfSeeds;
         this.isKalah = isKalah;
     }
 
     /**
-     * Checks if pit is empty
+     * Checks if house is empty
      *
-     * @return True if pit is empty
+     * @return true if house is empty
      */
-    public boolean isEmptyPit() {
-        return (stones == 0);
+    public boolean isEmptyHouse() {
+        return (numberOfSeeds == 0);
     }
 
     /**
-     * Empties pit
+     * Empties house
      */
-    public void emptyPit() {
-        this.stones = 0;
+    public void emptyHouse() {
+        this.numberOfSeeds = 0;
     }
 
     public long getId() {
@@ -53,12 +53,12 @@ public class Pit {
         this.playerId = player;
     }
 
-    public long getStones() {
-        return stones;
+    public long getNumberOfSeeds() {
+        return numberOfSeeds;
     }
 
-    public void setStones(long stones) {
-        this.stones = stones;
+    public void setNumberOfSeeds(long numberOfSeeds) {
+        this.numberOfSeeds = numberOfSeeds;
     }
 
     public boolean isKalah() {

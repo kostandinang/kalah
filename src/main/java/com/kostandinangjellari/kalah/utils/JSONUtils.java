@@ -1,8 +1,9 @@
 package com.kostandinangjellari.kalah.utils;
 
-import com.kostandinangjellari.kalah.constants.Keys;
-import com.kostandinangjellari.kalah.constants.Logs;
-import com.kostandinangjellari.kalah.entities.Pit;
+import com.kostandinangjellari.kalah.constants.JsonKeys;
+import com.kostandinangjellari.kalah.constants.GameStrings;
+import com.kostandinangjellari.kalah.entities.Game;
+import com.kostandinangjellari.kalah.entities.House;
 import com.kostandinangjellari.kalah.entities.Player;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -24,6 +25,7 @@ public class JSONUtils {
 
     /**
      * Gets Json Object from Json String
+     *
      * @param jsonString
      * @return
      */
@@ -33,13 +35,14 @@ public class JSONUtils {
             JSONParser jsonParser = new JSONParser();
             jsonObject = (JSONObject) jsonParser.parse(jsonString);
         } catch (ParseException e) {
-            Logger.getAnonymousLogger().severe(Logs.JSON_PARSE_ERROR);
+            Logger.getAnonymousLogger().severe(GameStrings.JSON_PARSE_ERROR);
         }
         return jsonObject;
     }
 
     /**
      * Gets player from Game State object
+     *
      * @param playerJsonArray
      * @param playerNumber
      * @return
@@ -47,10 +50,10 @@ public class JSONUtils {
     public static Player getPlayerFromJson(JSONArray playerJsonArray, long playerNumber) {
         Player player = null;
         if (playerJsonArray.size() > 0) {
-            JSONObject playerJsonObject = (JSONObject) playerJsonArray.get((int)playerNumber);
+            JSONObject playerJsonObject = (JSONObject) playerJsonArray.get((int) playerNumber);
             player = new Player(
-                    (String)playerJsonObject.get(Keys.NAME),
-                    (Long) playerJsonObject.get(Keys.ID)
+                    (String) playerJsonObject.get(JsonKeys.NAME),
+                    (Long) playerJsonObject.get(JsonKeys.ID)
             );
         }
         return player;
@@ -58,27 +61,40 @@ public class JSONUtils {
 
     /**
      * Gets array of pits from json array object
-     * @param pitsJsonArray
+     *
+     * @param housesJsonArray
      * @return
      */
-    public static HashMap<Long, Pit> getPitsFromJson(JSONArray pitsJsonArray) {
-        HashMap<Long, Pit> pits = new HashMap<>();
-        if (pitsJsonArray != null && pitsJsonArray.size() > 0) {
-            JSONObject pitJsonObject;
-            Iterator iterator = pitsJsonArray.iterator();
+    public static HashMap<Long, House> getPitsFromJson(JSONArray housesJsonArray) {
+        HashMap<Long, House> houses = new HashMap<>();
+        if (housesJsonArray != null && housesJsonArray.size() > 0) {
+            JSONObject houseJsonObject;
+            Iterator iterator = housesJsonArray.iterator();
             while (iterator.hasNext()) {
-                //Add pit
-                pitJsonObject = (JSONObject) iterator.next();
-                long key = (Long) pitJsonObject.get(Keys.ID);
-                Pit pit = new Pit(
+                //Add house
+                houseJsonObject = (JSONObject) iterator.next();
+                long key = (Long) houseJsonObject.get(JsonKeys.ID);
+                House house = new House(
                         key,
-                        (Long) pitJsonObject.get(Keys.STONES),
-                        (Long) pitJsonObject.get(Keys.PLAYER_ID),
-                        (Boolean) pitJsonObject.get(Keys.IS_KALAH)
+                        (Long) houseJsonObject.get(JsonKeys.SEEDS),
+                        (Long) houseJsonObject.get(JsonKeys.PLAYER_ID),
+                        (Boolean) houseJsonObject.get(JsonKeys.IS_KALAH)
                 );
-                pits.put(key, pit);
+                houses.put(key, house);
             }
         }
-        return pits;
+        return houses;
+    }
+
+    /**
+     * Gets JsonObject from game
+     *
+     * @param game
+     * @return
+     */
+    public static JSONObject getJsonFromGame(Game game) {
+        JSONObject resultJson = new JSONObject();
+        //TODO - Add Game to Json response
+        return resultJson;
     }
 }

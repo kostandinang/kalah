@@ -77,7 +77,7 @@ var Kalah = (function() {
         return playerPit;
     }
 
-    //TODO - Check FUnction
+    //TODO - Check
     function activatePits(player) {
         for (var key in pitPlacement) {
             var pit = pitPlacement[key];
