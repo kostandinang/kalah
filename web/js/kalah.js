@@ -1,11 +1,11 @@
-var Kalah = (function() {
+var Kalah = (function () {
 
     var config;
-    var pitsNodes = [];
-    var pits = [];
+    var houseNodes = [];
+    var houses = [];
     var player1, player2;
     var activePlayer;
-    var currentPit;
+    var currentHouse;
     var winner = null;
 
     /**
@@ -14,7 +14,7 @@ var Kalah = (function() {
     function startGame() {
         createPlayers();
         initPits();
-        console.log(pitsNodes);
+        console.log(houseNodes);
     }
 
     /**
@@ -28,57 +28,56 @@ var Kalah = (function() {
     }
 
     /**
-     * Initialize pits
-     * Set to global var pits and add initial stones
+     * Initialize houses
+     * Set to global var houses and add initial seeds
      */
     function initPits() {
         var isKalahPit = false;
         var p2PitId = 0;
-        for (var i = 1; i <= config.pitNumber + 1; i++) {
-            //Create player pits
-            isKalahPit = (i == config.pitNumber + 1);
-            p2PitId = config.pitNumber + 1 + i;
+        for (var i = 1; i <= config.seedNumber + 1; i++) {
+            //Create player houses
+            isKalahPit = (i == config.seedNumber + 1);
+            p2PitId = config.seedNumber + 1 + i;
             var p1Pit = createPit(i, player1, isKalahPit);
             var p2Pit = createPit(p2PitId, player2, isKalahPit);
-            //Draws Stones to top and bottom pits
+            //Draws Stones to top and bottom houses
             if (!isKalahPit) {
-                addStonesToPit(p1Pit, i);
-                addStonesToPit(p2Pit, i*2);
+                sowSeedsToHouse(p1Pit, i);
+                sowSeedsToHouse(p2Pit, i * 2);
             }
         }
     }
 
     /**
-     * Creates a new pit and places it top or
+     * Creates a new house and places it top or
      * bottom based on player
-     * @param pitIndex
+     * @param houseIndex
      * @param playerx
      * @param isKalah
-     * @param pitPlacement
-     * @returns {Pit}
+     * @returns {House}
      */
-    function createPit(pitIndex, player, isKalah) {
-        var playerPit = new Pit(pitIndex, player, isKalah);
-        pits.push(playerPit);
+    function createPit(houseIndex, player, isKalah) {
+        var playerHouse = new House(houseIndex, player, isKalah);
+        houses.push(playerHouse);
         /**
-         * Add pit mouse listener
+         * Add house mouse listener
          */
-        playerPit.addMouseListener(function(pit) {
+        playerHouse.addMouseListener(function (pit) {
             console.log(pit.id);
-            currentPit = pit;
-            activePlayer = currentPit.player;
+            currentHouse = pit;
+            activePlayer = currentHouse.player;
             /**
              * Next Move
              */
-            Rest.getNextGameState(KalahFactory.buildStateObject(pits, [player1, player2], activePlayer, currentPit));
-            /*deactivatePits(pits.topPits);
-             activatePits(pits.bottomPits);*/
+            Rest.getNextGameState(KalahFactory.buildStateObject(houses, [player1, player2], activePlayer, currentHouse));
+            /*deactivatePits(houses.topPits);
+             activateHouses(houses.bottomPits);*/
         });
-        return playerPit;
+        return playerHouse;
     }
 
     //TODO - Check
-    function activatePits(player) {
+    function activateHouses(player) {
         for (var key in pitPlacement) {
             var pit = pitPlacement[key];
             if (!pit.isKalah & !pit.isEmpty()) {
@@ -88,22 +87,22 @@ var Kalah = (function() {
     }
 
     /**
-     * Add stones to top and bottom pit
-     * @param topPit
-     * @param bottomPit
+     * Add seeds to top and bottom house
+     * @param house
+     * @param seedGroupId
      */
-    function addStonesToPit(pit, stoneGroupId) {
-        var currentStone;
-        for (var stoneIndex = 0; stoneIndex < config.stoneNumber; stoneIndex++) {
-            var stoneId = stoneGroupId * config.stoneNumber + stoneIndex;
-            currentStone = new Stone(stoneId);
-            pit.addStone(currentStone);
-            pit.getDomElement().appendChild(Render.createStone(stoneId));
+    function sowSeedsToHouse(house, seedGroupId) {
+        var currentSeed;
+        for (var seedIndex = 0; seedIndex < config.houseNumber; seedIndex++) {
+            var stoneId = seedGroupId * config.houseNumber + seedIndex;
+            currentSeed = new Seed(stoneId);
+            house.addSeed(currentSeed);
         }
+        house.getDomElement().appendChild(Render.createSeedElement(stoneId));
     }
 
     return {
-        start: function(_config) {
+        start: function (_config) {
             config = _config;
             startGame();
         }

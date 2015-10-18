@@ -1,10 +1,11 @@
 var Constants = (function() {
     return {
-        STONE_CLASS: "stone",
-        STONE_ID_PREFIX: "stone-",
+        SEED_CLASS: "seed",
+        HOUSE_ID_PREFIX: "house-",
+        SEED_ID_PREFIX: "seed-",
         START_GAME_BTN: "start-game-btn",
         PLAYER_TURN_LABEL: "player-turn-label",
-        pitPlacement: {
+        housePlacement: {
             TOP: "TOP",
             BOTTOM: "BOTTOM"
         },

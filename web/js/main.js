@@ -7,8 +7,8 @@ window.onload = function () {
         //Start Kalah Game if player names are defined
         if (p1Input.value && p2Input.value) {
             Kalah.start({
-                stoneNumber: 6,
-                pitNumber: 6,
+                houseNumber: 6,
+                seedNumber: 6,
                 player1Name: p1Input.value,
                 player2Name: p2Input.value
             });

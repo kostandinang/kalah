@@ -4,10 +4,10 @@ var Render = (function() {
      * Creates a stone element node
      * @returns {Element}
      */
-    function createStone(id) {
+    function createSeedElement(id) {
         var stoneNode = document.createElement("div");
-        stoneNode.setAttribute("class", Constants.STONE_CLASS);
-        stoneNode.setAttribute("id", Constants.STONE_ID_PREFIX + id);
+        stoneNode.setAttribute("class", Constants.SEED_CLASS);
+        stoneNode.setAttribute("id", Constants.SEED_ID_PREFIX + id);
         return stoneNode;
     }
 
@@ -20,8 +20,8 @@ var Render = (function() {
     }
 
     return {
-        createStone: function(id) {
-            return createStone(id);
+        createSeedElement: function(id) {
+            return createSeedElement(id);
         },
         setActivePlayerLabel: function(name) {
             setActivePlayerLabel(name);

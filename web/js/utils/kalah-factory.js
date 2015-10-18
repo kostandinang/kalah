@@ -3,27 +3,26 @@ var KalahFactory = (function () {
     /**
      * Builds a state object from game parameters
      * ready for rest transportation
-     * @param pits
+     * @param houses
      * @param players
      * @param activePlayer
-     * @param currentPit
+     * @param currentHouse
      * @returns {{}}
      */
-    this.buildStateObject = function (pits, players, activePlayer, currentPit) {
+    this.buildStateObject = function (houses, players, activePlayer, currentHouse) {
         var stateObject = {};
-        var pitsState = [];
+        var houseState = [];
         var playersState = [];
         /**
-         * Build Pits state object
+         * Build Houses state object
          */
-        pits.forEach(function (pit) {
-            var currentPit = {};
-            currentPit["id"] = pit.id;
-            currentPit["stones"] = pit.stones.length;
-            currentPit["is_kalah"] = pit.isKalah;
-            currentPit["player_id"] = pit.player.id;
-            currentPit["id"] = pit.id;
-            pitsState.push(currentPit);
+        houses.forEach(function (pit) {
+            var currentHouse = {};
+            currentHouse["id"] = pit.id;
+            currentHouse["seeds"] = pit.seeds.length;
+            currentHouse["is_kalah"] = pit.isKalah;
+            currentHouse["player_id"] = pit.player.id;
+            houseState.push(currentHouse);
         });
         /**
          * Build Players state object
@@ -34,16 +33,16 @@ var KalahFactory = (function () {
         /**
          * Set other states
          */
-        stateObject["pits"] = pitsState;
+        stateObject["houses"] = houseState;
         stateObject["players"] = playersState;
         stateObject["active_player"] = activePlayer.id;
-        stateObject["current_pit"] = currentPit.id;
+        stateObject["current_house"] = currentHouse.id;
         return stateObject;
     };
 
     return {
-        buildStateObject: function(pits, players, activePlayer, currentPit) {
-            return buildStateObject(pits, players, activePlayer, currentPit);
+        buildStateObject: function(houses, players, activePlayer, currentHouse) {
+            return buildStateObject(houses, players, activePlayer, currentHouse);
         }
     }
 })();

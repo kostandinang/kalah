@@ -3,7 +3,14 @@
 }
 
 body {
-    background-color: #eaeaea;
+    background-image: url(../assets/imgs/wp.jpg);
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.clearfix {
+    clear: both;
 }
 
 #game-frame {
@@ -14,15 +21,30 @@ body {
     right: 0;
     width: 800px;
     height: 550px;
-    background-color: white;
     margin: auto;
-    box-shadow: 0px 0px 10px 5px #ddd;
+}
+
+.board {
+    background-image: url(../assets/imgs/board.png);
+    height: 500px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto !important;
+    background-repeat: no-repeat;
+    margin-top: 50px !important;
 }
 
 .game-title {
     color: white;
-    background-color: #555;
+    background-color: #0C0C0C;
     padding: 18px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
 }
 
 form {
@@ -44,14 +66,14 @@ form {
 
 .left-board {
     width: 146px;
-    border-right: solid 2px #eaeaea;
-    background-color: #54b2ff;
+    background: url(../assets/imgs/kalah.png) no-repeat right center;
+    margin-left: 10px;
 }
 
 .right-board {
     width: 146px;
-    border-left: solid 2px #eaeaea;
-    background-color: #ff4349;
+    background: url(../assets/imgs/kalah.png) no-repeat left center;
+    margin-left: -10px;
 }
 
 .center-board {
@@ -61,35 +83,41 @@ form {
 
 .top-center-board {
     height: 245px !important;
-    border-bottom: solid 2px #eaeaea;
     width: 500px;
 }
 
 .bottom-center-board {
     height: 245px !important;
-    border-bottom: solid 2px #eaeaea;
     width: 500px;
 }
 
 .top-center-board>div {
-    background-color: #54b2ff;
+    margin-top: 90px !important;
 }
 
 .bottom-center-board>div {
-    background-color: #ff4349;
+    margin-top: 100px !important;
 }
 
 .top-center-board>div, .bottom-center-board>div {
     width: 60px;
-    height: 200px;
+    height: 60px;
     margin: 10px;
+    background: url(../assets/imgs/house.png) no-repeat center;
+    border-radius: 100% !important;
+}
+
+.top-center-board>div:hover, .bottom-center-board>div:hover {
+    box-shadow: inset 0px 0px 1px 2px #ffbb6f;
 }
 
 /* Game Graphics */
-.stone {
-    background-color: black;
-    width: 10px !important;
-    height: 10px !important;
-    margin: 5px;
+.seed {
+    width: 30px !important;
+    height: 30px !important;
+    background: url(../assets/imgs/seed.png) no-repeat center;
     border-radius: 100%;
+    position: relative;
+    top: 16px;
+    left: 17px;
 }
