@@ -38,7 +38,9 @@ var Kalah = (function () {
             p2HouseId = config.houseNumber + 1 + i;
             var p1House = createHouse(i, player1, isKalah);
             var p2House = createHouse(p2HouseId, player2, isKalah);
-            //Draws Stones to top and bottom houses
+            /**
+             * Sow seeds into houses
+             */
             sowInitialSeedsToHouse(p1House, isKalah);
             sowInitialSeedsToHouse(p2House, isKalah);
         }
@@ -92,17 +94,14 @@ var Kalah = (function () {
         var houseDomElement;
         var seedIndicatorElement;
         houseDomElement = house.getDomElement();
-        if (!isKalah) {
-            //Add seeds
-            for (var i = 0; i < config.seedNumber; i++) {
-                house.addSeed();
-            }
-            seedIndicatorElement = Render.createHouseSeedIndicator(houseDomElement, house.getSeeds());
-            houseDomElement.appendChild(Render.createSeedElement());
-        } else {
-            seedIndicatorElement = Render.createHouseSeedIndicator(houseDomElement, 0);
-        }
+        seedIndicatorElement = Render.createHouseSeedIndicator(houseDomElement, house.getSeeds());
+        houseDomElement.appendChild(Render.createSeedElement());
         houseDomElement.appendChild(seedIndicatorElement);
+        if (!isKalah) {
+            house.setSeeds(config.seedNumber);
+        } else {
+            house.setSeeds(0);
+        }
     }
 
     /**
@@ -119,9 +118,20 @@ var Kalah = (function () {
      * @param gameResponse
      */
     function updateGameState(gameResponse) {
+        var responseHouse = null;
         gameResponse = JSON.parse(gameResponse);
         var gameResponse = KalahFactory.buildGameResponseObject(gameResponse);
-        console.log(gameResponse);
+        setCurrentPlayer(gameResponse.currentPlayer);
+        for (var key in gameResponse.houses) {
+            if (gameResponse.houses.hasOwnProperty(key)) {
+                responseHouse = gameResponse.houses[key];
+                houses.forEach(function(house) {
+                    if (house.id == key) {
+                        sowSeedsToHouse(house, responseHouse.seeds);
+                    }
+                })
+            }
+        }
     }
 
     /**

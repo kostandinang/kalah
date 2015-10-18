@@ -141,9 +141,23 @@ form {
     top: 0;
     bottom: 0;
     margin-left: 178px;
-    margin-top: 220px;
+    margin-top: 225px;
     font-size: 40px;
 }
+
+.left-board>div.seed {
+    position: absolute;
+    top: 225px;
+    margin-left: 80px;
+}
+
+.right-board>div.seed {
+    /* position: absolute; */
+    top: 235px;
+    margin-right: -90px;
+    margin-left: 15px;
+}
+
 
 /* Game Graphics */
 .seed {

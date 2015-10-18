@@ -35,7 +35,7 @@ var KalahFactory = (function () {
          */
         stateObject["houses"] = houseState;
         stateObject["players"] = playersState;
-        stateObject["active_player"] = activePlayer.id;
+        stateObject["current_player"] = activePlayer.id;
         stateObject["current_house"] = currentHouse.id;
         return stateObject;
     };

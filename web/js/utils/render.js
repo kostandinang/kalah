@@ -5,9 +5,9 @@ var Render = (function() {
      * @returns {Element}
      */
     function createSeedElement() {
-        var stoneNode = document.createElement("div");
-        stoneNode.setAttribute("class", Constants.SEED_CLASS);
-        return stoneNode;
+        var seedNode = document.createElement("div");
+        seedNode.setAttribute("class", Constants.SEED_CLASS);
+        return seedNode;
     }
 
     /**
