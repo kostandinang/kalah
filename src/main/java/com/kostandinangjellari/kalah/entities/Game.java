@@ -11,17 +11,17 @@ import java.util.HashMap;
 
 public class Game {
 
-    private Player player1;
-    private Player player2;
+    private Player p1;
+    private Player p2;
     private Player activePlayer;
     private Player winnerPlayer;
-    private HashMap<Long, Pit> pits;
-    private Pit currentPit;
+    private HashMap<Long, House> houses;
+    private House currentHouse;
 
-    public Game(Player player1, Player player2, HashMap<Long, Pit> pits) {
-        this.player1 = player1;
-        this.player2 = player2;
-        this.pits = pits;
+    public Game(Player p1, Player p2, HashMap<Long, House> houses) {
+        this.p1 = p1;
+        this.p2 = p2;
+        this.houses = houses;
         this.winnerPlayer = null;
     }
 
@@ -32,24 +32,24 @@ public class Game {
      * @param player2
      */
     public void setPlayers(Player player1, Player player2) {
-        this.player1 = player1;
-        this.player2 = player2;
+        this.p1 = player1;
+        this.p2 = player2;
     }
 
     public Player getPlayer1() {
-        return player1;
+        return p1;
     }
 
-    public void setPlayer1(Player player1) {
-        this.player1 = player1;
+    public void setPlayer1(Player p1) {
+        this.p1 = p1;
     }
 
     public Player getPlayer2() {
-        return player2;
+        return p2;
     }
 
-    public void setPlayer2(Player player2) {
-        this.player2 = player2;
+    public void setPlayer2(Player p2) {
+        this.p2 = p2;
     }
 
     public Player getActivePlayer() {
@@ -60,20 +60,20 @@ public class Game {
         this.activePlayer = player;
     }
 
-    public HashMap<Long, Pit> getPits() {
-        return pits;
+    public HashMap<Long, House> getHouses() {
+        return houses;
     }
 
-    public void setPits(HashMap<Long, Pit> pits) {
-        this.pits = pits;
+    public void setHouses(HashMap<Long, House> houses) {
+        this.houses = houses;
     }
 
-    public Pit getCurrentPit() {
-        return currentPit;
+    public House getCurrentHouse() {
+        return currentHouse;
     }
 
-    public void setCurrentPit(Pit pit) {
-        this.currentPit = pit;
+    public void setCurrentHouse(House house) {
+        this.currentHouse = house;
     }
 
     public Player getWinnerPlayer() {

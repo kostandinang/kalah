@@ -1,9 +1,9 @@
 package com.kostandinangjellari.kalah.controllers;
 
-import com.kostandinangjellari.kalah.constants.Keys;
+import com.kostandinangjellari.kalah.constants.JsonKeys;
 import com.kostandinangjellari.kalah.entities.Game;
+import com.kostandinangjellari.kalah.entities.House;
 import com.kostandinangjellari.kalah.entities.Kalah;
-import com.kostandinangjellari.kalah.entities.Pit;
 import com.kostandinangjellari.kalah.entities.Player;
 import com.kostandinangjellari.kalah.utils.JSONUtils;
 import org.json.simple.JSONArray;
@@ -41,12 +41,12 @@ public class KalahController {
         /**
          * Get Pits
          */
-        JSONArray pitsJsonArray = (JSONArray) iputGameJson.get(Keys.PITS);
-        HashMap<Long, Pit> pits = JSONUtils.getPitsFromJson(pitsJsonArray);
+        JSONArray pitsJsonArray = (JSONArray) iputGameJson.get(JsonKeys.HOUSES);
+        HashMap<Long, House> pits = JSONUtils.getPitsFromJson(pitsJsonArray);
         /**
          * Get players
          */
-        JSONArray playersJsonArray = (JSONArray) iputGameJson.get(Keys.PLAYERS);
+        JSONArray playersJsonArray = (JSONArray) iputGameJson.get(JsonKeys.PLAYERS);
         Player player1 = JSONUtils.getPlayerFromJson(playersJsonArray, 0);
         Player player2 = JSONUtils.getPlayerFromJson(playersJsonArray, 1);
         /**
@@ -56,13 +56,13 @@ public class KalahController {
         /**
          * Get Active Player
          */
-        long activePlayer = (Long) iputGameJson.get(Keys.ACTIVE_PLAYER);
+        long activePlayer = (Long) iputGameJson.get(JsonKeys.ACTIVE_PLAYER);
         game.setActivePlayer((activePlayer == 0) ? player1 : player2);
         /**
          * Set currentPit
          */
-        long currentPitId = (Long) iputGameJson.get(Keys.CURRENT_PIT);
-        game.setCurrentPit(pits.get(currentPitId));
+        long currentPitId = (Long) iputGameJson.get(JsonKeys.CURRENT_HOUSE);
+        game.setCurrentHouse(pits.get(currentPitId));
         return game;
     }
 

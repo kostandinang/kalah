@@ -8,6 +8,7 @@ package com.kostandinangjellari.kalah.entities;
  */
 
 import com.kostandinangjellari.kalah.constants.GameConfig;
+import com.kostandinangjellari.kalah.exceptions.InvalidMoveException;
 
 import java.util.logging.Logger;
 
@@ -33,40 +34,37 @@ public class Kalah {
         return outputGame;
     }
 
-    public static void seedStones(Game game) {
+    public static void sowSeeds(Game game) throws InvalidMoveException {
         Player activePlayer = game.getActivePlayer();
-        Pit currentPit = game.getCurrentPit();
-        Pit nextPit;
+        House currentHouse = game.getCurrentHouse();
+        long numOfSeeds = currentHouse.getNumberOfSeeds();
+        House nextHouse;
         /**
-         * Count all stones for the current pit
+         * For each seed distribute to other houses except other player Kalah
          */
-        if (currentPit.getStones() > 0) {
-            long stoneNum = currentPit.getStones();
-            /**
-             * For each stone distribute to other pits except other player Kalah
-             */
-            for (int i = 1; i <= stoneNum; i++) {
-                currentPit.setStones(currentPit.getStones() - 1);
-                long nextPitNum = ((currentPit.getId() + i) % getTotalPitNumber());
+        if (numOfSeeds > 0) {
+            for (int i = 1; i <= numOfSeeds; i++) {
+                currentHouse.setNumberOfSeeds(currentHouse.getNumberOfSeeds() - 1);
+                long nextPitNum = ((currentHouse.getId() + i) % getTotalNumberOfHouses());
                 //TODO - Untested Functionality
                 if (nextPitNum != 0) {
-                    nextPit = game.getPits().get(nextPitNum);
+                    nextHouse = game.getHouses().get(nextPitNum);
                 } else {
-                    nextPit = game.getPits().get(getPlayerFirstPitId(activePlayer));
+                    nextHouse = game.getHouses().get(getPlayerFirstHouseId(activePlayer));
                     i++;
-                    stoneNum++;
+                    numOfSeeds++;
                 }
                 /**
-                 * If the last stone is in an empty pit
-                 * remove all other stones and other player
-                 * parallell stones and send it to active player Kalah
+                 * If the last seed is in an empty pit
+                 * remove all other seeds and other player
+                 * parallell seeds and send it to active player Kalah
                  */
-                if (i == stoneNum) {
-                    if (nextPit.isEmptyPit()) {
-                        seedIntoPlayerKalah(nextPit, activePlayer);
+                if (i == numOfSeeds) {
+                    if (nextHouse.isEmptyHouse()) {
+                        seedIntoPlayerKalah(nextHouse, activePlayer);
                     }
                 }
-                Logger.getAnonymousLogger().info(String.valueOf(nextPit.getId()));
+                Logger.getAnonymousLogger().info(String.valueOf(nextHouse.getId()));
             }
             /**
              * Sets active player as winner if game has finished
@@ -74,6 +72,8 @@ public class Kalah {
             if (hasGameFinished()) {
                 game.setWinnerPlayer(activePlayer);
             }
+        } else {
+            throw new InvalidMoveException();
         }
     }
 
@@ -83,9 +83,9 @@ public class Kalah {
      */
     private static boolean hasGameFinished() {
         boolean hasFinished = true;
-        for (long pitId : game.getPits().keySet()) {
+        for (long pitId : game.getHouses().keySet()) {
             if (pitId < getPlayerKalah(game.getActivePlayer()).getId()) {
-                if (!game.getPits().get(pitId).isEmptyPit()) {
+                if (!game.getHouses().get(pitId).isEmptyHouse()) {
                     hasFinished = false;
                     break;
                 }
@@ -95,32 +95,32 @@ public class Kalah {
     }
 
     /**
-     * Removes stones from player pit and parallell
-     * other player pit and seeds them into player's Kalah
+     * Removes seeds from player house and parallell
+     * other player house and seeds them into player's Kalah
      *
-     * @param pit
+     * @param house
      * @param player
      */
-    private static void seedIntoPlayerKalah(Pit pit, Player player) {
-        Pit playerKalah = getPlayerKalah(player);
-        Pit otherPlayerParallellPit = getOtherPlayerParallellPit(pit, player);
-        long otherPlayerStoneNumber = otherPlayerParallellPit.getStones();
-        pit.emptyPit();
-        otherPlayerParallellPit.emptyPit();
-        playerKalah.setStones(otherPlayerStoneNumber + 1);
+    private static void seedIntoPlayerKalah(House house, Player player) {
+        House playerKalah = getPlayerKalah(player);
+        House otherPlayerParallellHouse = getOtherPlayerParallellHouse(house, player);
+        long otherPlayerStoneNumber = otherPlayerParallellHouse.getNumberOfSeeds();
+        house.emptyHouse();
+        otherPlayerParallellHouse.emptyHouse();
+        playerKalah.setNumberOfSeeds(otherPlayerStoneNumber + 1);
     }
 
     /**
-     * Gets other player pit in parallell direction
-     * with current pit
+     * Gets other player house in parallell direction
+     * with current house
      *
-     * @param pit
+     * @param house
      * @param player
      * @return
      */
-    private static Pit getOtherPlayerParallellPit(Pit pit, Player player) {
-        long pitNumber = pit.getId();
-        return game.getPits().get(getTotalPitNumber() - pitNumber);
+    private static House getOtherPlayerParallellHouse(House house, Player player) {
+        long pitNumber = house.getId();
+        return game.getHouses().get(getTotalNumberOfHouses() - pitNumber);
     }
 
     /**
@@ -134,33 +134,33 @@ public class Kalah {
     }
 
     /**
-     * Gets total Pit Number
+     * Gets total House Number
      *
      * @return
      */
-    private static int getTotalPitNumber() {
-        return GameConfig.PIT_PER_PLAYER * 2 + 2;
+    private static int getTotalNumberOfHouses() {
+        return GameConfig.HOUSE_PER_PLAYER * 2 + 2;
     }
 
     /**
-     * Checks if this pit is Kalah of the opponent
+     * Checks if this house is Kalah of the opponent
      *
      * @param currentPlayer
-     * @param pit
+     * @param house
      * @return
      */
-    public static boolean isOtherPlayerKalah(Player currentPlayer, Pit pit) {
-        return (pit.isKalah() && (pit.getPlayer() != currentPlayer.getId()));
+    public static boolean isOtherPlayerKalah(Player currentPlayer, House house) {
+        return (house.isKalah() && (house.getPlayer() != currentPlayer.getId()));
     }
 
     /**
-     * Gets the first id of the player's pit
+     * Gets the first id of the player's house
      *
      * @param player
      * @return
      */
-    public static long getPlayerFirstPitId(Player player) {
-        return (player.getId() == 0) ? 1 : GameConfig.PIT_PER_PLAYER + 2;
+    public static long getPlayerFirstHouseId(Player player) {
+        return (player.getId() == 0) ? 1 : GameConfig.HOUSE_PER_PLAYER + 2;
     }
 
     /**
@@ -169,10 +169,10 @@ public class Kalah {
      * @param player
      * @return
      */
-    public static Pit getPlayerKalah(Player player) {
+    public static House getPlayerKalah(Player player) {
         return (player.getId() == 0) ?
-                game.getPits().get(GameConfig.PIT_PER_PLAYER + 1) :
-                game.getPits().get(getTotalPitNumber());
+                game.getHouses().get(GameConfig.HOUSE_PER_PLAYER + 1) :
+                game.getHouses().get(getTotalNumberOfHouses());
     }
 
 }
