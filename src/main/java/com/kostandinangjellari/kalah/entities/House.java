@@ -30,12 +30,28 @@ public class House {
     }
 
     /**
+     * Gets houses Hash Map from houses Array
+     *
+     * @param houseList
+     * @return
+     */
+    public static HashMap<Long, House> mapHouses(ArrayList<House> houseList) {
+        HashMap<Long, House> houses = new HashMap<>();
+        if (houseList != null && houseList.size() > 0) {
+            for (House house : houseList) {
+                houses.put(house.getId(), house);
+            }
+        }
+        return houses;
+    }
+
+    /**
      * Checks if house is empty
      *
      * @return true if house is empty
      */
     public boolean isEmptyHouse() {
-        return (seeds == 0);
+        return (this.seeds == 0);
     }
 
     /**
@@ -85,21 +101,5 @@ public class House {
     public long removeSeed() {
         --this.seeds;
         return this.seeds;
-    }
-
-    /**
-     * Gets houses Hash Map from houses Array
-     *
-     * @param houseList
-     * @return
-     */
-    public static HashMap<Long, House> mapHouses(ArrayList<House> houseList) {
-        HashMap<Long, House> houses = new HashMap<>();
-        if (houseList != null && houseList.size() > 0) {
-            for (House house : houseList) {
-                houses.put(house.getId(), house);
-            }
-        }
-        return houses;
     }
 }

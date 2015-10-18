@@ -10,4 +10,5 @@ package com.kostandinangjellari.kalah.constants;
 public class GameStrings {
     public static String JSON_PARSE_ERROR = "Could not parse Json !";
     public static String EMPTY_HOUSE_EXCEPTION = "Empty House !";
+    public static String GAME_OVER_EXCEPTION = "Game Over !";
 }

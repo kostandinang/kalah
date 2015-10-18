@@ -2,6 +2,7 @@ package com.kostandinangjellari.kalah.controllers;
 
 import com.kostandinangjellari.kalah.entities.*;
 import com.kostandinangjellari.kalah.exceptions.EmptyHouseException;
+import com.kostandinangjellari.kalah.exceptions.GameOverException;
 
 import java.util.HashMap;
 
@@ -20,7 +21,7 @@ public class KalahController {
      * @param gameRequest
      * @return next game state json configuration
      */
-    public static GameResponse next(GameRequest gameRequest) throws EmptyHouseException {
+    public static GameResponse next(GameRequest gameRequest) throws EmptyHouseException, GameOverException {
         Game game = initGameFromGameRequest(gameRequest);
         /**
          * Get next game state

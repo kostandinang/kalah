@@ -4,6 +4,7 @@ import com.kostandinangjellari.kalah.controllers.KalahController;
 import com.kostandinangjellari.kalah.entities.GameRequest;
 import com.kostandinangjellari.kalah.entities.GameResponse;
 import com.kostandinangjellari.kalah.exceptions.EmptyHouseException;
+import com.kostandinangjellari.kalah.exceptions.GameOverException;
 import com.kostandinangjellari.kalah.utils.JSONUtils;
 
 import javax.ws.rs.FormParam;
@@ -28,10 +29,10 @@ public class KalahService {
             @FormParam("game_request") String gameRequestJsonString
     ) {
         GameRequest gameRequest = JSONUtils.getGameRequestFromJson(gameRequestJsonString);
-        GameResponse gameResponse = null;
+        GameResponse gameResponse = new GameResponse();
         try {
             gameResponse = KalahController.next(gameRequest);
-        } catch (EmptyHouseException e) {
+        } catch (EmptyHouseException | GameOverException e) {
             gameResponse.setMessage(e.getMessage());
         }
         return JSONUtils.getJsonFromGameResponse(gameResponse);

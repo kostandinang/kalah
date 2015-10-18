@@ -26,6 +26,10 @@ public class GameResponse {
         this.winnerPlayerId = winnerPlayerId;
     }
 
+    public GameResponse() {
+
+    }
+
     public HashMap<Long, House> getHouses() {
         return houses;
     }

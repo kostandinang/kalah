@@ -8,7 +8,7 @@ window.onload = function () {
         if (p1Input.value && p2Input.value) {
             Kalah.start({
                 houseNumber: 6,
-                seedNumber: 3,
+                seedNumber: 1,
                 player1Name: p1Input.value,
                 player2Name: p2Input.value
             });

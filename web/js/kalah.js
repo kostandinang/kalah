@@ -118,6 +118,9 @@ var Kalah = (function () {
      */
     function updateGameState(gameResponse) {
         var gameResponse = KalahFactory.buildGameResponseObject(JSON.parse(gameResponse));
+        if (gameResponse["message"]) {
+            alert(gameResponse["message"]);
+        }
         setCurrentPlayer(gameResponse.currentPlayer);
         updateHouseState(gameResponse);
     }
