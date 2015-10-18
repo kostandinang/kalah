@@ -8,10 +8,11 @@ import com.kostandinangjellari.kalah.constants.GameStrings;
  * Date: 10/17/2015.
  * Copyright 2015
  */
+
 public class EmptyHouseException extends Exception {
 
     public EmptyHouseException() {
-        super( GameStrings.EMPTY_HOUSE_EXCEPTION);
+        super(GameStrings.EMPTY_HOUSE_EXCEPTION);
     }
 
     @Override

@@ -8,10 +8,11 @@ import com.kostandinangjellari.kalah.constants.GameStrings;
  * Date: 10/17/2015.
  * Copyright 2015
  */
+
 public class GameOverException extends Exception {
 
     public GameOverException() {
-        super( GameStrings.GAME_OVER_EXCEPTION);
+        super(GameStrings.GAME_OVER_EXCEPTION);
     }
 
     @Override

@@ -3,9 +3,8 @@
 }
 
 body {
-    background-image: url(../assets/imgs/wp.jpg);
-    background-position: center;
-    background-attachment: fixed;
+
+    background: url(../assets/imgs/wp.jpg) fixed center;
     background-size: cover;
 }
 
@@ -22,10 +21,10 @@ body {
     width: 800px;
     height: 550px;
     margin: auto;
+    overflow: hidden;
 }
 
 .board {
-    background-image: url(../assets/imgs/board.png);
     height: 500px;
     position: absolute;
     top: 0;
@@ -33,7 +32,7 @@ body {
     left: 0;
     right: 0;
     margin: auto !important;
-    background-repeat: no-repeat;
+     background: url(../assets/imgs/board.png) no-repeat;
     margin-top: 50px !important;
 }
 
@@ -52,10 +51,11 @@ form {
 }
 
 .title {
-    font-size: 20px;
-    background-color: red;
+    font-size: 30px;
+    /* background-color: red; */
     margin-left: -10px;
     padding: 10px;
+    color: #F3E1B6;
 }
 
 /* Boards */
@@ -172,6 +172,10 @@ form {
 
 .current-player-label {
     position: absolute;
-    right: 20px;
-    width: 120px;
+    right: 30px;
+    top: 25px;
+}
+
+#player-turn-label {
+    font-weight: 800;
 }

@@ -26,7 +26,7 @@ public class KalahController {
         /**
          * Get next game state
          */
-        game = Kalah.getNextGame(game);
+        game = GameRules.getNextGame(game);
         return getGameResponseFromCurretGame(game);
     }
 

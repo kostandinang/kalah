@@ -11,12 +11,12 @@ import java.util.HashMap;
  * Date: 10/15/2015.
  * Copyright 2015
  */
-public class KalahTest {
+public class GameRulesTest {
 
     @Test
     public void testGetNextGame() throws Exception {
         Game testGame = getTestGame();
-        Game outputGame = Kalah.getNextGame(testGame);
+        Game outputGame = GameRules.getNextGame(testGame);
         Assert.assertNotNull(outputGame);
     }
 
@@ -32,7 +32,7 @@ public class KalahTest {
 
     @Test
     public void testSeedStones() throws Exception {
-        Kalah.sowSeeds(getTestGame());
+        GameRules.sowSeeds(getTestGame());
     }
 
     /**
