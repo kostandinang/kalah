@@ -1,13 +1,6 @@
 package com.kostandinangjellari.kalah.controllers;
 
-import com.kostandinangjellari.kalah.constants.JsonKeys;
-import com.kostandinangjellari.kalah.entities.Game;
-import com.kostandinangjellari.kalah.entities.House;
-import com.kostandinangjellari.kalah.entities.Kalah;
-import com.kostandinangjellari.kalah.entities.Player;
-import com.kostandinangjellari.kalah.utils.JSONUtils;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.kostandinangjellari.kalah.entities.*;
 
 import java.util.HashMap;
 
@@ -22,47 +15,46 @@ public class KalahController {
 
     /**
      * Builds the game and calculates next game state
-     * @param gameInputJson
+     *
+     * @param gameRequest
      * @return next game state json configuration
      */
-    public static JSONObject next(JSONObject gameInputJson) {
-        JSONObject gameStateResult = new JSONObject();
-        Game game = initGameFromGameState(gameInputJson);
+    public static GameResponse next(GameRequest gameRequest) {
+        GameResponse gameResponse = null;
+        Game game = initGameFromGameState(gameRequest);
         /**
          * Get next game state
          */
         game = Kalah.getNextGame(game);
         //TODO - Generate gameOutputJson
-        return gameStateResult;
+        return gameResponse;
     }
 
-    private static Game initGameFromGameState(JSONObject iputGameJson) {
+    private static Game initGameFromGameState(GameRequest gameRequest) {
         Game game;
         /**
          * Get Pits
          */
-        JSONArray pitsJsonArray = (JSONArray) iputGameJson.get(JsonKeys.HOUSES);
-        HashMap<Long, House> pits = JSONUtils.getPitsFromJson(pitsJsonArray);
+        HashMap<Long, House> houses = House.mapHouses(gameRequest.getHouses());
         /**
          * Get players
          */
-        JSONArray playersJsonArray = (JSONArray) iputGameJson.get(JsonKeys.PLAYERS);
-        Player player1 = JSONUtils.getPlayerFromJson(playersJsonArray, 0);
-        Player player2 = JSONUtils.getPlayerFromJson(playersJsonArray, 1);
+        Player player1 = Player.findPlayer(gameRequest.getPlayers(), 0);
+        Player player2 = Player.findPlayer(gameRequest.getPlayers(), 1);
         /**
          * Create Game
          */
-        game = new Game(player1, player2, pits);
+        game = new Game(player1, player2, houses);
         /**
          * Get Active Player
          */
-        long activePlayer = (Long) iputGameJson.get(JsonKeys.ACTIVE_PLAYER);
+        long activePlayer = gameRequest.getCurrentPlayer();
         game.setActivePlayer((activePlayer == 0) ? player1 : player2);
         /**
-         * Set currentPit
+         * Set current house
          */
-        long currentPitId = (Long) iputGameJson.get(JsonKeys.CURRENT_HOUSE);
-        game.setCurrentHouse(pits.get(currentPitId));
+        long currentHouseId = gameRequest.getCurrentHouse();
+        game.setCurrentHouse(houses.get(currentHouseId));
         return game;
     }
 

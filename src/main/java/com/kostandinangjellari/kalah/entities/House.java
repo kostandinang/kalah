@@ -1,5 +1,8 @@
 package com.kostandinangjellari.kalah.entities;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * Title: kalah
  * Author: Kostandin Angjellari
@@ -67,5 +70,21 @@ public class House {
 
     public void setIsKalah(boolean isKalah) {
         this.isKalah = isKalah;
+    }
+
+    /**
+     * Gets houses Hash Map from houses Array
+     *
+     * @param houseList
+     * @return
+     */
+    public static HashMap<Long, House> mapHouses(ArrayList<House> houseList) {
+        HashMap<Long, House> houses = new HashMap<>();
+        if (houseList != null && houseList.size() > 0) {
+            for (House house : houseList) {
+                houses.put(house.getId(), house);
+            }
+        }
+        return houses;
     }
 }

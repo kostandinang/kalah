@@ -45,10 +45,10 @@ public class Kalah {
         if (numOfSeeds > 0) {
             for (int i = 1; i <= numOfSeeds; i++) {
                 currentHouse.setNumberOfSeeds(currentHouse.getNumberOfSeeds() - 1);
-                long nextPitNum = ((currentHouse.getId() + i) % getTotalNumberOfHouses());
+                long nextHouseId = ((currentHouse.getId() + i) % getTotalNumberOfHouses());
                 //TODO - Untested Functionality
-                if (nextPitNum != 0) {
-                    nextHouse = game.getHouses().get(nextPitNum);
+                if (nextHouseId != 0) {
+                    nextHouse = game.getHouses().get(nextHouseId);
                 } else {
                     nextHouse = game.getHouses().get(getPlayerFirstHouseId(activePlayer));
                     i++;

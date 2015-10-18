@@ -4,11 +4,35 @@ var Render = (function() {
      * Creates a stone element node
      * @returns {Element}
      */
-    function createSeedElement(id) {
+    function createSeedElement() {
         var stoneNode = document.createElement("div");
         stoneNode.setAttribute("class", Constants.SEED_CLASS);
-        stoneNode.setAttribute("id", Constants.SEED_ID_PREFIX + id);
         return stoneNode;
+    }
+
+    /**
+     * Creates house dom element
+     * @param id
+     * @returns {Element}
+     */
+    function createHouseElement(id) {
+        var houseNode = document.createElement("div");
+        houseNode.setAttribute("id", Constants.HOUSE_ID_PREFIX + id);
+        return houseNode;
+    }
+
+    /**
+     * Creates a node which shows seed number for the house
+     * @param houseNode
+     * @param numberOfSeeds
+     * @returns {Element}
+     */
+    function createHouseSeedIndicator(houseNode, numberOfSeeds) {
+        var seedIndicatorNode = document.createElement("div");
+        seedIndicatorNode.setAttribute("class", Constants.SEED_NUMBER);
+        seedIndicatorNode.innerHTML = numberOfSeeds || 0;
+        houseNode.appendChild(seedIndicatorNode);
+        return seedIndicatorNode;
     }
 
     /**
@@ -20,8 +44,14 @@ var Render = (function() {
     }
 
     return {
-        createSeedElement: function(id) {
-            return createSeedElement(id);
+        createHouseElement: function(id) {
+            return createHouseElement(id);
+        },
+        createHouseSeedIndicator: function(houseNode, numberOfSeeds) {
+            return createHouseSeedIndicator(houseNode, numberOfSeeds);
+        },
+        createSeedElement: function() {
+            return createSeedElement();
         },
         setActivePlayerLabel: function(name) {
             setActivePlayerLabel(name);

@@ -1,13 +1,17 @@
 var House = function(id, player, isKalah) {
     this.id = id;
-    this.seeds = [];
+    this.seeds = 0;
     this.player = player;
     this.isKalah = isKalah;
     this.housePlacement;
 };
 
-House.prototype.addSeed = function(stone) {
-    this.seeds.push(stone);
+House.prototype.getSeeds = function() {
+    return this.seeds;
+};
+
+House.prototype.addSeed = function() {
+    this.seeds++;
 };
 
 House.prototype.isKalah = function() {

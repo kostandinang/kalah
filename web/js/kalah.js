@@ -13,7 +13,7 @@ var Kalah = (function () {
      */
     function startGame() {
         createPlayers();
-        initPits();
+        initHouses();
         console.log(houseNodes);
     }
 
@@ -31,19 +31,19 @@ var Kalah = (function () {
      * Initialize houses
      * Set to global var houses and add initial seeds
      */
-    function initPits() {
-        var isKalahPit = false;
-        var p2PitId = 0;
-        for (var i = 1; i <= config.seedNumber + 1; i++) {
+    function initHouses() {
+        var isKalah = false;
+        var p2HouseId = 0;
+        for (var i = 1; i <= config.houseNumber + 1; i++) {
             //Create player houses
-            isKalahPit = (i == config.seedNumber + 1);
-            p2PitId = config.seedNumber + 1 + i;
-            var p1Pit = createPit(i, player1, isKalahPit);
-            var p2Pit = createPit(p2PitId, player2, isKalahPit);
+            isKalah = (i == config.houseNumber + 1);
+            p2HouseId = config.houseNumber + 1 + i;
+            var p1House = createHouse(i, player1, isKalah);
+            var p2House = createHouse(p2HouseId, player2, isKalah);
             //Draws Stones to top and bottom houses
-            if (!isKalahPit) {
-                sowSeedsToHouse(p1Pit, i);
-                sowSeedsToHouse(p2Pit, i * 2);
+            if (!isKalah) {
+                sowSeedsToHouse(p1House);
+                sowSeedsToHouse(p2House);
             }
         }
     }
@@ -56,8 +56,9 @@ var Kalah = (function () {
      * @param isKalah
      * @returns {House}
      */
-    function createPit(houseIndex, player, isKalah) {
+    function createHouse(houseIndex, player, isKalah) {
         var playerHouse = new House(houseIndex, player, isKalah);
+
         houses.push(playerHouse);
         /**
          * Add house mouse listener
@@ -91,14 +92,17 @@ var Kalah = (function () {
      * @param house
      * @param seedGroupId
      */
-    function sowSeedsToHouse(house, seedGroupId) {
-        var currentSeed;
-        for (var seedIndex = 0; seedIndex < config.houseNumber; seedIndex++) {
-            var stoneId = seedGroupId * config.houseNumber + seedIndex;
-            currentSeed = new Seed(stoneId);
-            house.addSeed(currentSeed);
+    function sowSeedsToHouse(house) {
+        var houseDomElement;
+        var seedIndicatorElement;
+        houseDomElement = house.getDomElement();
+        //Add seeds
+        for (var i = 0; i < config.seedNumber; i++) {
+            house.addSeed();
         }
-        house.getDomElement().appendChild(Render.createSeedElement(stoneId));
+        seedIndicatorElement = Render.createHouseSeedIndicator(houseDomElement, house.getSeeds());
+        houseDomElement.appendChild(Render.createSeedElement());
+        houseDomElement.appendChild(seedIndicatorElement);
     }
 
     return {

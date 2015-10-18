@@ -1,10 +1,15 @@
 var Constants = (function() {
     return {
+        ids: {
+            TOP_BOARD: "top-board",
+            BOTTOM_BOARD: "bottom-board"
+        },
         SEED_CLASS: "seed",
         HOUSE_ID_PREFIX: "house-",
         SEED_ID_PREFIX: "seed-",
         START_GAME_BTN: "start-game-btn",
         PLAYER_TURN_LABEL: "player-turn-label",
+        SEED_NUMBER: "seed-number",
         housePlacement: {
             TOP: "TOP",
             BOTTOM: "BOTTOM"
