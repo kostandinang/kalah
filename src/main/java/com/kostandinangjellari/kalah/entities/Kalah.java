@@ -124,8 +124,8 @@ public class Kalah {
      */
     private static boolean hasGameFinished() {
         for (long houseId : game.getHouses().keySet()) {
-            if (houseId < getPlayerKalah(game.getActivePlayer()).getId()) {
-                if (!game.getHouses().get(houseId).isEmptyHouse()) {
+            if (game.getHouses().get(houseId).getPlayer() == game.getActivePlayer().getId()) {
+                if (!game.getHouses().get(houseId).isKalah() && !game.getHouses().get(houseId).isEmptyHouse()) {
                     return false;
                 }
             }
