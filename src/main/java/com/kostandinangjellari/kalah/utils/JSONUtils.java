@@ -1,18 +1,8 @@
 package com.kostandinangjellari.kalah.utils;
 
-import com.kostandinangjellari.kalah.constants.JsonKeys;
-import com.kostandinangjellari.kalah.constants.GameStrings;
-import com.kostandinangjellari.kalah.entities.Game;
-import com.kostandinangjellari.kalah.entities.House;
-import com.kostandinangjellari.kalah.entities.Player;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.logging.Logger;
+import com.google.gson.Gson;
+import com.kostandinangjellari.kalah.entities.GameRequest;
+import com.kostandinangjellari.kalah.entities.GameResponse;
 
 /**
  * Title: kalah
@@ -24,77 +14,35 @@ import java.util.logging.Logger;
 public class JSONUtils {
 
     /**
-     * Gets Json Object from Json String
+     * Get GameRequest from JsonString
      *
      * @param jsonString
      * @return
      */
-    public static JSONObject getJsonObjectFromJsonString(String jsonString) {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            JSONParser jsonParser = new JSONParser();
-            jsonObject = (JSONObject) jsonParser.parse(jsonString);
-        } catch (ParseException e) {
-            Logger.getAnonymousLogger().severe(GameStrings.JSON_PARSE_ERROR);
-        }
-        return jsonObject;
+    public static GameRequest getGameRequestFromJson(String jsonString) {
+        Gson gson = new Gson();
+        return gson.fromJson(jsonString, GameRequest.class);
     }
 
     /**
-     * Gets player from Game State object
+     * Gets GameResponse from json string
      *
-     * @param playerJsonArray
-     * @param playerNumber
+     * @param jsonString
      * @return
      */
-    public static Player getPlayerFromJson(JSONArray playerJsonArray, long playerNumber) {
-        Player player = null;
-        if (playerJsonArray.size() > 0) {
-            JSONObject playerJsonObject = (JSONObject) playerJsonArray.get((int) playerNumber);
-            player = new Player(
-                    (String) playerJsonObject.get(JsonKeys.NAME),
-                    (Long) playerJsonObject.get(JsonKeys.ID)
-            );
-        }
-        return player;
+    public static GameResponse getGameResponseFromJsonString(String jsonString) {
+        Gson gson = new Gson();
+        return gson.fromJson(jsonString, GameResponse.class);
     }
 
     /**
-     * Gets array of pits from json array object
+     * Gets json from GameResponse object
      *
-     * @param housesJsonArray
+     * @param gameResponse
      * @return
      */
-    public static HashMap<Long, House> getPitsFromJson(JSONArray housesJsonArray) {
-        HashMap<Long, House> houses = new HashMap<>();
-        if (housesJsonArray != null && housesJsonArray.size() > 0) {
-            JSONObject houseJsonObject;
-            Iterator iterator = housesJsonArray.iterator();
-            while (iterator.hasNext()) {
-                //Add house
-                houseJsonObject = (JSONObject) iterator.next();
-                long key = (Long) houseJsonObject.get(JsonKeys.ID);
-                House house = new House(
-                        key,
-                        (Long) houseJsonObject.get(JsonKeys.SEEDS),
-                        (Long) houseJsonObject.get(JsonKeys.PLAYER_ID),
-                        (Boolean) houseJsonObject.get(JsonKeys.IS_KALAH)
-                );
-                houses.put(key, house);
-            }
-        }
-        return houses;
-    }
-
-    /**
-     * Gets JsonObject from game
-     *
-     * @param game
-     * @return
-     */
-    public static JSONObject getJsonFromGame(Game game) {
-        JSONObject resultJson = new JSONObject();
-        //TODO - Add Game to Json response
-        return resultJson;
+    public static String getJsonFromGameResponse(GameResponse gameResponse) {
+        Gson gson = new Gson();
+        return gson.toJson(gameResponse);
     }
 }

@@ -1,5 +1,7 @@
 package com.kostandinangjellari.kalah.entities;
 
+import java.util.ArrayList;
+
 /**
  * Title: kalah
  * Author: Kostandin Angjellari
@@ -37,5 +39,19 @@ public class Player {
     public boolean equals(Object obj) {
         Player otherPlayer = (Player) obj;
         return (this.id == otherPlayer.getId());
+    }
+
+
+    /**
+     * Finds player by id in players array
+     * @param players
+     * @param playerId
+     * @return
+     */
+    public static Player findPlayer(ArrayList<Player> players, long playerId) {
+        for(Player player : players) {
+            if (playerId == player.getId()) return player;
+        }
+        return null;
     }
 }

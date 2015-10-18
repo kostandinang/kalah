@@ -30,13 +30,9 @@ var Ajax = (function () {
      */
     function handleAjaxResponse(xhr, success, error) {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            if (success) {
-                success(xhr.responseText);
-            }
+            if (success) success(xhr.responseText);
         } else {
-            if (error) {
-                error(xhr.responseText);
-            }
+            if (error) error(xhr.responseText);
         }
     }
 

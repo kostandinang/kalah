@@ -8,10 +8,11 @@ import com.kostandinangjellari.kalah.constants.GameStrings;
  * Date: 10/17/2015.
  * Copyright 2015
  */
-public class InvalidMoveException extends Exception {
 
-    public InvalidMoveException() {
-        super( GameStrings.INVALID_MOVE_EXCEPTION);
+public class EmptyHouseException extends Exception {
+
+    public EmptyHouseException() {
+        super(GameStrings.EMPTY_HOUSE_EXCEPTION);
     }
 
     @Override

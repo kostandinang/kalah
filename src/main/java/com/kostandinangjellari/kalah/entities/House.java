@@ -1,5 +1,10 @@
 package com.kostandinangjellari.kalah.entities;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * Title: kalah
  * Author: Kostandin Angjellari
@@ -10,15 +15,34 @@ package com.kostandinangjellari.kalah.entities;
 public class House {
 
     private long id;
+    @SerializedName("player_id")
     private long playerId;
-    private long numberOfSeeds;
+    @SerializedName("seeds")
+    private long seeds;
+    @SerializedName("is_kalah")
     private boolean isKalah;
 
-    public House(long id, long numberOfSeeds, long playerId, boolean isKalah) {
+    public House(long id, long seeds, long playerId, boolean isKalah) {
         this.id = id;
         this.playerId = playerId;
-        this.numberOfSeeds = numberOfSeeds;
+        this.seeds = seeds;
         this.isKalah = isKalah;
+    }
+
+    /**
+     * Gets houses Hash Map from houses Array
+     *
+     * @param houseList
+     * @return
+     */
+    public static HashMap<Long, House> mapHouses(ArrayList<House> houseList) {
+        HashMap<Long, House> houses = new HashMap<>();
+        if (houseList != null && houseList.size() > 0) {
+            for (House house : houseList) {
+                houses.put(house.getId(), house);
+            }
+        }
+        return houses;
     }
 
     /**
@@ -27,14 +51,14 @@ public class House {
      * @return true if house is empty
      */
     public boolean isEmptyHouse() {
-        return (numberOfSeeds == 0);
+        return (this.seeds == 0);
     }
 
     /**
      * Empties house
      */
     public void emptyHouse() {
-        this.numberOfSeeds = 0;
+        this.seeds = 0;
     }
 
     public long getId() {
@@ -53,12 +77,12 @@ public class House {
         this.playerId = player;
     }
 
-    public long getNumberOfSeeds() {
-        return numberOfSeeds;
+    public long getSeeds() {
+        return this.seeds;
     }
 
-    public void setNumberOfSeeds(long numberOfSeeds) {
-        this.numberOfSeeds = numberOfSeeds;
+    public void setSeeds(long seeds) {
+        this.seeds = seeds;
     }
 
     public boolean isKalah() {
@@ -67,5 +91,15 @@ public class House {
 
     public void setIsKalah(boolean isKalah) {
         this.isKalah = isKalah;
+    }
+
+    public long addSeed() {
+        ++this.seeds;
+        return this.seeds;
+    }
+
+    public long removeSeed() {
+        --this.seeds;
+        return this.seeds;
     }
 }
