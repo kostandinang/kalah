@@ -1,9 +1,15 @@
+/**
+ * Game House
+ * @param id
+ * @param player
+ * @param isKalah
+ * @constructor
+ */
 var House = function(id, player, isKalah) {
     this.id = id;
     this.seeds = 0;
     this.player = player;
     this.isKalah = isKalah;
-    this.housePlacement;
 };
 
 House.prototype.getSeeds = function() {
@@ -56,15 +62,6 @@ House.prototype.addMouseListener = function(clickCallback) {
     var self = this;
     if (!this.isKalah) {
         this.getDomElement().addEventListener("click", function() {
-            clickCallback(self);
-        })
-    }
-};
-
-House.prototype.removeMouseListener = function(clickCallback) {
-    var self = this;
-    if (!this.isKalah) {
-        this.getDomElement().removeEventListener("click", function() {
             clickCallback(self);
         })
     }

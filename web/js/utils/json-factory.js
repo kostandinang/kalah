@@ -1,4 +1,8 @@
-var KalahFactory = (function () {
+/**
+ *
+ * @type {{buildGameRequestObject, buildGameResponseObject}}
+ */
+var JsonFactory = (function () {
 
     /**
      * Builds a state object from game parameters

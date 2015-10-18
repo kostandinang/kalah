@@ -75,9 +75,6 @@ public class Kalah {
                     houseCount = 0;
                     nextHouse = game.getHouses().get(startHouseId);
                 }
-                houseCount++;
-                nextHouse.addSeed();
-                currentHouse.removeSeed();
                 /**
                  * If the last seed is in an empty house follow two rules
                  */
@@ -87,15 +84,21 @@ public class Kalah {
                      */
                     if (nextHouse.isKalah()) {
                         outputActivePlayer = activePlayer;
-                    }
+                    } else
                     /**
                      * Remove all other seeds and other player
                      * parallel seeds and send it to active player Kalah
                      */
-                    if (nextHouse.isEmptyHouse()) {
+                    if (nextHouse.isEmptyHouse() && !getOtherPlayerParallellHouse(nextHouse, activePlayer).isEmptyHouse()) {
                         seedIntoPlayerKalah(nextHouse, activePlayer);
+                        currentHouse.removeSeed();
+                        houseCount++;
+                        break;
                     }
                 }
+                houseCount++;
+                nextHouse.addSeed();
+                currentHouse.removeSeed();
             }
             /**
              * Sets active player as winner if game has finished

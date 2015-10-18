@@ -1,3 +1,9 @@
+/**
+ * Main client logic is handled here
+ * Keep tracking of players, houses and dom events
+ * winner and game messages
+ * @type {{start}}
+ */
 var Kalah = (function () {
 
     var config;
@@ -72,13 +78,17 @@ var Kalah = (function () {
                 /**
                  * Get Next Game State
                  */
-                var gameState = KalahFactory.buildGameRequestObject(houses, [player1, player2], activePlayer, currentHouse);
-                Rest.getNextGameState(
-                    gameState,
-                    function(response) {
-                        updateGameState(response);
-                    }
-                );
+                if (!winner) {
+                    var gameState = JsonFactory.buildGameRequestObject(houses, [player1, player2], activePlayer, currentHouse);
+                    Rest.getNextGameState(
+                        gameState,
+                        function(response) {
+                            updateGameState(response);
+                        }
+                    );
+                } else {
+                    alert(Constants.GAME_OVER_MESSAGE);
+                }
             }
         });
         return playerHouse;
@@ -117,9 +127,13 @@ var Kalah = (function () {
      * @param gameResponse
      */
     function updateGameState(gameResponse) {
-        var gameResponse = KalahFactory.buildGameResponseObject(JSON.parse(gameResponse));
-        if (gameResponse["message"]) {
-            alert(gameResponse["message"]);
+        var gameResponse = JsonFactory.buildGameResponseObject(JSON.parse(gameResponse));
+        if (gameResponse.message) {
+            if (gameResponse.winner) {
+                alert(gameResponse.message + " Winner: " + (gameResponse.winner == 0) ? player1.name : player2.name);
+                winner = gameResponse.winner;
+            }
+            alert(gameResponse.message);
         }
         setCurrentPlayer(gameResponse.currentPlayer);
         updateHouseState(gameResponse);

@@ -19,6 +19,15 @@
                 Player 2:
                 <input name="player2Name" placeholder="Enter Name"/>
             </label>
+            <label>
+                Seeds:
+                <select id="seed-num">
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+            </label>
             <button type="button" id="start-game-btn">Start</button>
         </form>
         <span class="current-player-label">
@@ -58,7 +67,7 @@
 <script src="js/utils/ajax.js"></script>
 <script src="js/utils/utils.js"></script>
 <script src="js/utils/rest.js"></script>
-<script src="js/utils/kalah-factory.js"></script>
+<script src="js/utils/json-factory.js"></script>
 <script src="js/entities/house.js"></script>
 <script src="js/entities/player.js"></script>
 <script src="js/entities/game-response.js"></script>

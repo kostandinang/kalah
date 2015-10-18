@@ -2,7 +2,8 @@ var Constants = (function() {
     return {
         ids: {
             TOP_BOARD: "top-board",
-            BOTTOM_BOARD: "bottom-board"
+            BOTTOM_BOARD: "bottom-board",
+            SEED_NUM_SELECT: "seed-num"
         },
         SEED_CLASS: "seed",
         HOUSE_ID_PREFIX: "house-",
@@ -15,6 +16,7 @@ var Constants = (function() {
             BOTTOM: "BOTTOM"
         },
         REST_URL: "rest/play",
-        ERROR_MESSAGE: "Server Connection Error !"
+        ERROR_MESSAGE: "Server Connection Error !",
+        GAME_OVER_MESSAGE: "Game Over !"
     }
 })();

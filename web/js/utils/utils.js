@@ -1,3 +1,7 @@
+/**
+ * Utilizing functions
+ * @type {{byId, hideElement, showElement}}
+ */
 var Utils = (function() {
 
     function byId(id) {
