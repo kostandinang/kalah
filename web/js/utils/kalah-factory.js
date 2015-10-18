@@ -16,12 +16,12 @@ var KalahFactory = (function () {
         /**
          * Build Houses state object
          */
-        houses.forEach(function (pit) {
+        houses.forEach(function (house) {
             var currentHouse = {};
-            currentHouse["id"] = pit.id;
-            currentHouse["seeds"] = pit.seeds.length;
-            currentHouse["is_kalah"] = pit.isKalah;
-            currentHouse["player_id"] = pit.player.id;
+            currentHouse["id"] = house.id;
+            currentHouse["seeds"] = house.getSeeds();
+            currentHouse["is_kalah"] = house.isKalah;
+            currentHouse["player_id"] = house.player.id;
             houseState.push(currentHouse);
         });
         /**

@@ -1,5 +1,7 @@
 package com.kostandinangjellari.kalah.entities;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,14 +15,17 @@ import java.util.HashMap;
 public class House {
 
     private long id;
+    @SerializedName("player_id")
     private long playerId;
-    private long numberOfSeeds;
+    @SerializedName("seeds")
+    private long seeds;
+    @SerializedName("is_kalah")
     private boolean isKalah;
 
-    public House(long id, long numberOfSeeds, long playerId, boolean isKalah) {
+    public House(long id, long seeds, long playerId, boolean isKalah) {
         this.id = id;
         this.playerId = playerId;
-        this.numberOfSeeds = numberOfSeeds;
+        this.seeds = seeds;
         this.isKalah = isKalah;
     }
 
@@ -30,14 +35,14 @@ public class House {
      * @return true if house is empty
      */
     public boolean isEmptyHouse() {
-        return (numberOfSeeds == 0);
+        return (seeds == 0);
     }
 
     /**
      * Empties house
      */
     public void emptyHouse() {
-        this.numberOfSeeds = 0;
+        this.seeds = 0;
     }
 
     public long getId() {
@@ -56,12 +61,12 @@ public class House {
         this.playerId = player;
     }
 
-    public long getNumberOfSeeds() {
-        return numberOfSeeds;
+    public long getSeeds() {
+        return seeds;
     }
 
-    public void setNumberOfSeeds(long numberOfSeeds) {
-        this.numberOfSeeds = numberOfSeeds;
+    public void setSeeds(long seeds) {
+        this.seeds = seeds;
     }
 
     public boolean isKalah() {

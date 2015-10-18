@@ -1,8 +1,6 @@
 package com.kostandinangjellari.kalah.services;
 
-import com.kostandinangjellari.kalah.controllers.KalahController;
 import com.kostandinangjellari.kalah.entities.GameRequest;
-import com.kostandinangjellari.kalah.entities.GameResponse;
 import com.kostandinangjellari.kalah.utils.JSONUtils;
 
 import javax.ws.rs.FormParam;
@@ -25,10 +23,10 @@ public class KalahService {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response test(
-            @FormParam("game_state") String gameRequestJsonString
+            @FormParam("game_request") String gameRequestJsonString
     ) {
         GameRequest gameRequest = JSONUtils.getGameRequestFromJson(gameRequestJsonString);
-        GameResponse gameResponse = KalahController.next(gameRequest);
-        return Response.ok(gameResponse).entity(String.class).build();
+        //GameResponse gameResponse = KalahController.next(gameRequest);
+        return Response.ok("{}").entity(String.class).build();
     }
 }

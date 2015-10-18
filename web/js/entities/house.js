@@ -11,7 +11,7 @@ House.prototype.getSeeds = function() {
 };
 
 House.prototype.addSeed = function() {
-    this.seeds++;
+    ++this.seeds;
 };
 
 House.prototype.isKalah = function() {

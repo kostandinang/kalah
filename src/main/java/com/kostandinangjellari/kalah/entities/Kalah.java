@@ -37,14 +37,14 @@ public class Kalah {
     public static void sowSeeds(Game game) throws InvalidMoveException {
         Player activePlayer = game.getActivePlayer();
         House currentHouse = game.getCurrentHouse();
-        long numOfSeeds = currentHouse.getNumberOfSeeds();
+        long numOfSeeds = currentHouse.getSeeds();
         House nextHouse;
         /**
          * For each seed distribute to other houses except other player Kalah
          */
         if (numOfSeeds > 0) {
             for (int i = 1; i <= numOfSeeds; i++) {
-                currentHouse.setNumberOfSeeds(currentHouse.getNumberOfSeeds() - 1);
+                currentHouse.setSeeds(currentHouse.getSeeds() - 1);
                 long nextHouseId = ((currentHouse.getId() + i) % getTotalNumberOfHouses());
                 //TODO - Untested Functionality
                 if (nextHouseId != 0) {
@@ -104,10 +104,10 @@ public class Kalah {
     private static void seedIntoPlayerKalah(House house, Player player) {
         House playerKalah = getPlayerKalah(player);
         House otherPlayerParallellHouse = getOtherPlayerParallellHouse(house, player);
-        long otherPlayerStoneNumber = otherPlayerParallellHouse.getNumberOfSeeds();
+        long otherPlayerStoneNumber = otherPlayerParallellHouse.getSeeds();
         house.emptyHouse();
         otherPlayerParallellHouse.emptyHouse();
-        playerKalah.setNumberOfSeeds(otherPlayerStoneNumber + 1);
+        playerKalah.setSeeds(otherPlayerStoneNumber + 1);
     }
 
     /**

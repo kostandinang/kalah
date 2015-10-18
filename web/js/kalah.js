@@ -58,14 +58,13 @@ var Kalah = (function () {
      */
     function createHouse(houseIndex, player, isKalah) {
         var playerHouse = new House(houseIndex, player, isKalah);
-
         houses.push(playerHouse);
         /**
          * Add house mouse listener
          */
-        playerHouse.addMouseListener(function (pit) {
-            console.log(pit.id);
-            currentHouse = pit;
+        playerHouse.addMouseListener(function (house) {
+            console.log(house.id);
+            currentHouse = house;
             activePlayer = currentHouse.player;
             /**
              * Next Move

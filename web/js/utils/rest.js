@@ -6,7 +6,7 @@ var Rest = (function() {
      */
     function getNextGameState(stateObject, success, error) {
         var param = {};
-        param["game_state"] = JSON.stringify(stateObject);
+        param["game_request"] = JSON.stringify(stateObject);
         Ajax.post(Constants.REST_URL, param,
             function(response) {
                 if (success) success(response);

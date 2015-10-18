@@ -1,5 +1,7 @@
 package com.kostandinangjellari.kalah.entities;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 /**
@@ -13,7 +15,9 @@ public class GameRequest {
 
     private ArrayList<House> houses;
     private ArrayList<Player> players;
+    @SerializedName("current_house")
     long currentHouse;
+    @SerializedName("current_player")
     long currentPlayer;
 
     public GameRequest(ArrayList<House> houses, ArrayList<Player> players, long currentHouse, long currentPlayer) {
