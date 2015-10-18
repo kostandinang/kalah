@@ -8,15 +8,15 @@ package com.kostandinangjellari.kalah.entities;
  */
 
 import com.kostandinangjellari.kalah.constants.GameConfig;
-import com.kostandinangjellari.kalah.exceptions.InvalidMoveException;
-
-import java.util.logging.Logger;
+import com.kostandinangjellari.kalah.exceptions.EmptyHouseException;
+import com.kostandinangjellari.kalah.exceptions.GameOverException;
 
 /**
  * Kalah processes game rules and logic and
  * calculates next game state
  */
 public class Kalah {
+
     private static Game game;
 
     /**
@@ -27,54 +27,98 @@ public class Kalah {
      * @param inputGame Input Game
      * @return Game Output Game
      */
-    public static Game getNextGame(Game inputGame) {
+    public static Game getNextGame(Game inputGame) throws EmptyHouseException, GameOverException {
         game = inputGame;
-        Game outputGame = null;
-        //TODO - Game logic goes here
-        return outputGame;
+        sowSeeds(game);
+        return game;
     }
 
-    public static void sowSeeds(Game game) throws InvalidMoveException {
+    /**
+     * Main game algorithm which distributes seeds
+     * into other houses while listening for game rules all the time
+     * @param game
+     * @throws EmptyHouseException
+     */
+    public static void sowSeeds(Game game) throws EmptyHouseException, GameOverException {
         Player activePlayer = game.getActivePlayer();
+        Player outputActivePlayer = null;
         House currentHouse = game.getCurrentHouse();
-        long numOfSeeds = currentHouse.getNumberOfSeeds();
+        long numOfSeeds = currentHouse.getSeeds();
+        long houseCount = 1;
+        long startHouseId = currentHouse.getId();
         House nextHouse;
+        long nextHouseId;
+        /**
+         * Set other player as active player
+         */
+        outputActivePlayer = getOtherPlayer(activePlayer);
         /**
          * For each seed distribute to other houses except other player Kalah
          */
         if (numOfSeeds > 0) {
             for (int i = 1; i <= numOfSeeds; i++) {
-                currentHouse.setNumberOfSeeds(currentHouse.getNumberOfSeeds() - 1);
-                long nextPitNum = ((currentHouse.getId() + i) % getTotalNumberOfHouses());
-                //TODO - Untested Functionality
-                if (nextPitNum != 0) {
-                    nextHouse = game.getHouses().get(nextPitNum);
-                } else {
-                    nextHouse = game.getHouses().get(getPlayerFirstHouseId(activePlayer));
-                    i++;
-                    numOfSeeds++;
+                /**
+                 * Get next house id, when maximum number of houses reached, start from the first one
+                 */
+                nextHouseId = (startHouseId + houseCount) % (getTotalNumberOfHouses() + 1);
+                if (nextHouseId == 0) {
+                    nextHouseId = 1l;
+                    houseCount++;
+                }
+                nextHouse = game.getHouses().get(nextHouseId);
+                /**
+                 * If house is other player Kalah, then start counting from current
+                 * player first house id and reset the house counter
+                 */
+                if (isOtherPlayerKalah(activePlayer, nextHouse)) {
+                    startHouseId = getPlayerFirstHouseId(activePlayer);
+                    houseCount = 0;
+                    nextHouse = game.getHouses().get(startHouseId);
                 }
                 /**
-                 * If the last seed is in an empty pit
-                 * remove all other seeds and other player
-                 * parallell seeds and send it to active player Kalah
+                 * If the last seed is in an empty house follow two rules
                  */
                 if (i == numOfSeeds) {
-                    if (nextHouse.isEmptyHouse()) {
+                    /**
+                     * This player turn again
+                     */
+                    if (nextHouse.isKalah()) {
+                        outputActivePlayer = activePlayer;
+                    } else
+                    /**
+                     * Remove all other seeds and other player
+                     * parallel seeds and send it to active player Kalah
+                     */
+                    if (nextHouse.isEmptyHouse() && !getOtherPlayerParallellHouse(nextHouse, activePlayer).isEmptyHouse()) {
                         seedIntoPlayerKalah(nextHouse, activePlayer);
+                        currentHouse.removeSeed();
+                        houseCount++;
+                        break;
                     }
                 }
-                Logger.getAnonymousLogger().info(String.valueOf(nextHouse.getId()));
+                houseCount++;
+                nextHouse.addSeed();
+                currentHouse.removeSeed();
             }
             /**
              * Sets active player as winner if game has finished
              */
             if (hasGameFinished()) {
                 game.setWinnerPlayer(activePlayer);
+                throw new GameOverException();
             }
+            /**
+             * Set other player as active
+             */
+            game.setActivePlayer(outputActivePlayer);
         } else {
-            throw new InvalidMoveException();
+            throw new EmptyHouseException();
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 
     /**
@@ -82,16 +126,14 @@ public class Kalah {
      * @return true if player has empty pits, false otherwiase
      */
     private static boolean hasGameFinished() {
-        boolean hasFinished = true;
-        for (long pitId : game.getHouses().keySet()) {
-            if (pitId < getPlayerKalah(game.getActivePlayer()).getId()) {
-                if (!game.getHouses().get(pitId).isEmptyHouse()) {
-                    hasFinished = false;
-                    break;
+        for (long houseId : game.getHouses().keySet()) {
+            if (game.getHouses().get(houseId).getPlayer() == game.getActivePlayer().getId()) {
+                if (!game.getHouses().get(houseId).isKalah() && !game.getHouses().get(houseId).isEmptyHouse()) {
+                    return false;
                 }
             }
         }
-        return hasFinished;
+        return true;
     }
 
     /**
@@ -104,10 +146,10 @@ public class Kalah {
     private static void seedIntoPlayerKalah(House house, Player player) {
         House playerKalah = getPlayerKalah(player);
         House otherPlayerParallellHouse = getOtherPlayerParallellHouse(house, player);
-        long otherPlayerStoneNumber = otherPlayerParallellHouse.getNumberOfSeeds();
+        long otherPlayerSeeds = otherPlayerParallellHouse.getSeeds();
         house.emptyHouse();
         otherPlayerParallellHouse.emptyHouse();
-        playerKalah.setNumberOfSeeds(otherPlayerStoneNumber + 1);
+        playerKalah.setSeeds(playerKalah.getSeeds() + otherPlayerSeeds + 1);
     }
 
     /**
@@ -119,8 +161,7 @@ public class Kalah {
      * @return
      */
     private static House getOtherPlayerParallellHouse(House house, Player player) {
-        long pitNumber = house.getId();
-        return game.getHouses().get(getTotalNumberOfHouses() - pitNumber);
+        return game.getHouses().get(getTotalNumberOfHouses() - house.getId());
     }
 
     /**
@@ -138,7 +179,7 @@ public class Kalah {
      *
      * @return
      */
-    private static int getTotalNumberOfHouses() {
+    private static long getTotalNumberOfHouses() {
         return GameConfig.HOUSE_PER_PLAYER * 2 + 2;
     }
 
@@ -171,7 +212,7 @@ public class Kalah {
      */
     public static House getPlayerKalah(Player player) {
         return (player.getId() == 0) ?
-                game.getHouses().get(GameConfig.HOUSE_PER_PLAYER + 1) :
+                game.getHouses().get(new Long(GameConfig.HOUSE_PER_PLAYER + 1)) :
                 game.getHouses().get(getTotalNumberOfHouses());
     }
 

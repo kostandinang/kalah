@@ -11,5 +11,5 @@ dependencies {
     testCompile group: 'org.testng', name: 'testng', version: '+'
     compile group: 'javax.servlet', name: 'servlet-api', version: '+'
     compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet', version: '+'
-    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '+'
+    compile group: 'com.google.code.gson', name: 'gson', version: '+'
 }

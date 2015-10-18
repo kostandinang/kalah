@@ -1,13 +1,37 @@
+/**
+ * Game House
+ * @param id
+ * @param player
+ * @param isKalah
+ * @constructor
+ */
 var House = function(id, player, isKalah) {
     this.id = id;
-    this.seeds = [];
+    this.seeds = 0;
     this.player = player;
     this.isKalah = isKalah;
-    this.housePlacement;
 };
 
-House.prototype.addSeed = function(stone) {
-    this.seeds.push(stone);
+House.prototype.getSeeds = function() {
+    return this.seeds;
+};
+
+House.prototype.addSeed = function() {
+    ++this.seeds;
+};
+
+House.prototype.emptySeeds = function() {
+    this.seeds = 0;
+};
+
+House.prototype.setSeeds = function(seeds) {
+    this.seeds = seeds;
+    if (seeds == 0) {
+        Utils.hideElement(this.getSeedElement());
+    } else {
+        Utils.showElement(this.getSeedElement());
+    }
+    this.getSeedIndicatorElement().innerHTML = seeds;
 };
 
 House.prototype.isKalah = function() {
@@ -26,19 +50,18 @@ House.prototype.getDomElement = function() {
     return Utils.byId(this.getHouseDomId());
 };
 
+House.prototype.getSeedElement = function() {
+    return this.getDomElement().firstElementChild;
+};
+
+House.prototype.getSeedIndicatorElement = function() {
+    return this.getDomElement().lastElementChild;
+};
+
 House.prototype.addMouseListener = function(clickCallback) {
     var self = this;
     if (!this.isKalah) {
         this.getDomElement().addEventListener("click", function() {
-            clickCallback(self);
-        })
-    }
-};
-
-House.prototype.removeMouseListener = function(clickCallback) {
-    var self = this;
-    if (!this.isKalah) {
-        this.getDomElement().removeEventListener("click", function() {
             clickCallback(self);
         })
     }

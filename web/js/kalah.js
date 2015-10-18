@@ -1,7 +1,12 @@
+/**
+ * Main client logic is handled here
+ * Keep tracking of players, houses and dom events
+ * winner and game messages
+ * @type {{start}}
+ */
 var Kalah = (function () {
 
     var config;
-    var houseNodes = [];
     var houses = [];
     var player1, player2;
     var activePlayer;
@@ -13,8 +18,7 @@ var Kalah = (function () {
      */
     function startGame() {
         createPlayers();
-        initPits();
-        console.log(houseNodes);
+        initHouses();
     }
 
     /**
@@ -23,28 +27,27 @@ var Kalah = (function () {
     function createPlayers() {
         player1 = new Player(config.player1Name, 0);
         player2 = new Player(config.player2Name, 1);
-        activePlayer = player1;
-        Render.setActivePlayerLabel(activePlayer.name);
+        setCurrentPlayer(player1.id);
     }
 
     /**
      * Initialize houses
      * Set to global var houses and add initial seeds
      */
-    function initPits() {
-        var isKalahPit = false;
-        var p2PitId = 0;
-        for (var i = 1; i <= config.seedNumber + 1; i++) {
+    function initHouses() {
+        var isKalah = false;
+        var p2HouseId = 0;
+        for (var i = 1; i <= config.houseNumber + 1; i++) {
             //Create player houses
-            isKalahPit = (i == config.seedNumber + 1);
-            p2PitId = config.seedNumber + 1 + i;
-            var p1Pit = createPit(i, player1, isKalahPit);
-            var p2Pit = createPit(p2PitId, player2, isKalahPit);
-            //Draws Stones to top and bottom houses
-            if (!isKalahPit) {
-                sowSeedsToHouse(p1Pit, i);
-                sowSeedsToHouse(p2Pit, i * 2);
-            }
+            isKalah = (i == config.houseNumber + 1);
+            p2HouseId = config.houseNumber + 1 + i;
+            var p1House = createHouse(i, player1, isKalah);
+            var p2House = createHouse(p2HouseId, player2, isKalah);
+            /**
+             * Sow seeds into houses
+             */
+            sowInitialSeedsToHouse(p1House, isKalah);
+            sowInitialSeedsToHouse(p2House, isKalah);
         }
     }
 
@@ -56,34 +59,39 @@ var Kalah = (function () {
      * @param isKalah
      * @returns {House}
      */
-    function createPit(houseIndex, player, isKalah) {
+    function createHouse(houseIndex, player, isKalah) {
         var playerHouse = new House(houseIndex, player, isKalah);
         houses.push(playerHouse);
         /**
+         * Activate houses for current Plyer
+         */
+        if (player == activePlayer) {
+            Render.setActiveHouse(playerHouse.getDomElement());
+        }
+        /**
          * Add house mouse listener
          */
-        playerHouse.addMouseListener(function (pit) {
-            console.log(pit.id);
-            currentHouse = pit;
-            activePlayer = currentHouse.player;
-            /**
-             * Next Move
-             */
-            Rest.getNextGameState(KalahFactory.buildStateObject(houses, [player1, player2], activePlayer, currentHouse));
-            /*deactivatePits(houses.topPits);
-             activateHouses(houses.bottomPits);*/
+        playerHouse.addMouseListener(function (house) {
+            if (isHouseActive(house)) {
+                currentHouse = house;
+                activePlayer = currentHouse.player;
+                /**
+                 * Get Next Game State
+                 */
+                if (!winner) {
+                    var gameState = JsonFactory.buildGameRequestObject(houses, [player1, player2], activePlayer, currentHouse);
+                    Rest.getNextGameState(
+                        gameState,
+                        function(response) {
+                            updateGameState(response);
+                        }
+                    );
+                } else {
+                    alert(Constants.GAME_OVER_MESSAGE);
+                }
+            }
         });
         return playerHouse;
-    }
-
-    //TODO - Check
-    function activateHouses(player) {
-        for (var key in pitPlacement) {
-            var pit = pitPlacement[key];
-            if (!pit.isKalah & !pit.isEmpty()) {
-                pit.addEventListener();
-            }
-        }
     }
 
     /**
@@ -91,14 +99,96 @@ var Kalah = (function () {
      * @param house
      * @param seedGroupId
      */
-    function sowSeedsToHouse(house, seedGroupId) {
-        var currentSeed;
-        for (var seedIndex = 0; seedIndex < config.houseNumber; seedIndex++) {
-            var stoneId = seedGroupId * config.houseNumber + seedIndex;
-            currentSeed = new Seed(stoneId);
-            house.addSeed(currentSeed);
+    function sowInitialSeedsToHouse(house, isKalah) {
+        var houseDomElement;
+        var seedIndicatorElement;
+        houseDomElement = house.getDomElement();
+        seedIndicatorElement = Render.createHouseSeedIndicator(houseDomElement, house.getSeeds());
+        houseDomElement.appendChild(Render.createSeedElement());
+        houseDomElement.appendChild(seedIndicatorElement);
+        if (!isKalah) {
+            house.setSeeds(config.seedNumber);
+        } else {
+            house.setSeeds(0);
         }
-        house.getDomElement().appendChild(Render.createSeedElement(stoneId));
+    }
+
+    /**
+     * Sows seed to house
+     * @param house
+     * @param seeds
+     */
+    function sowSeedsToHouse(house, seeds) {
+        house.setSeeds(seeds);
+    }
+
+    /**
+     * Updates game state, houses, players, checks for winners and messages
+     * @param gameResponse
+     */
+    function updateGameState(gameResponse) {
+        var gameResponse = JsonFactory.buildGameResponseObject(JSON.parse(gameResponse));
+        if (gameResponse.message) {
+            if (gameResponse.winner) {
+                alert(gameResponse.message + " Winner: " + (gameResponse.winner == 0) ? player1.name : player2.name);
+                winner = gameResponse.winner;
+            }
+            alert(gameResponse.message);
+        }
+        setCurrentPlayer(gameResponse.currentPlayer);
+        updateHouseState(gameResponse);
+    }
+
+    /**
+     * Updates houses
+     * @param gameResponse
+     */
+    function updateHouseState(gameResponse) {
+        var responseHouse = null;
+        for (var key in gameResponse.houses) {
+            if (gameResponse.houses.hasOwnProperty(key)) {
+                responseHouse = gameResponse.houses[key];
+                houses.forEach(function(house) {
+                    if (house.id == key) {
+                        sowSeedsToHouse(house, responseHouse.seeds);
+                    }
+                })
+            }
+        }
+    }
+
+    /**
+     * Updates current Player based on player id
+     * @param playerId
+     * @returns {*}
+     */
+    function setCurrentPlayer(playerId) {
+        activePlayer = (playerId == 0) ? player1 : player2;
+        Render.setActivePlayerLabel(activePlayer.name);
+        activateCurrentPlayerInputs(activePlayer);
+    }
+
+    /**
+     * Activate player houses
+     * @param player
+     */
+    function activateCurrentPlayerInputs(player) {
+        houses.forEach(function(house) {
+            if (house.player == player) {
+                Render.setActiveHouse(house.getDomElement());
+            } else {
+                Render.removeActiveHouse(house.getDomElement());
+            }
+        });
+    }
+
+    /**
+     * Checks if house is active
+     * @param house
+     * @returns {*}
+     */
+    function isHouseActive(house) {
+        return Render.hasActiveAttribute(house.getDomElement());
     }
 
     return {

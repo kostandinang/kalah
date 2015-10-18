@@ -95,6 +95,22 @@ form {
     margin-top: 90px !important;
 }
 
+.seed-number {
+    color: #ffbb6f;
+    position: absolute;
+    margin-left: 27px;
+    font-size: 20px;
+    height: 20px !important;
+}
+
+.top-center-board>div>div.seed-number {
+    margin-top: 80px;
+}
+
+.bottom-center-board>div>div.seed-number {
+    margin-top: -30px;
+}
+
 .bottom-center-board>div {
     margin-top: 100px !important;
 }
@@ -107,9 +123,41 @@ form {
     border-radius: 100% !important;
 }
 
-.top-center-board>div:hover, .bottom-center-board>div:hover {
+.top-center-board>div[active]:hover, .bottom-center-board>div[active]:hover {
     box-shadow: inset 0px 0px 1px 2px #ffbb6f;
 }
+
+.right-board>div.seed-number {
+    position: relative;
+    top: 0;
+    bottom: 0;
+    margin-left: -60px;
+    margin-top: 225px;
+    font-size: 40px;
+}
+
+.left-board>div.seed-number {
+    position: relative;
+    top: 0;
+    bottom: 0;
+    margin-left: 178px;
+    margin-top: 225px;
+    font-size: 40px;
+}
+
+.left-board>div.seed {
+    position: absolute;
+    top: 225px;
+    margin-left: 80px;
+}
+
+.right-board>div.seed {
+    /* position: absolute; */
+    top: 235px;
+    margin-right: -90px;
+    margin-left: 15px;
+}
+
 
 /* Game Graphics */
 .seed {
@@ -120,4 +168,10 @@ form {
     position: relative;
     top: 16px;
     left: 17px;
+}
+
+.current-player-label {
+    position: absolute;
+    right: 20px;
+    width: 120px;
 }
