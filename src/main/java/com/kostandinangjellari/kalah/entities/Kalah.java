@@ -92,6 +92,7 @@ public class Kalah {
             if (hasGameFinished()) {
                 game.setWinnerPlayer(activePlayer);
             }
+            game.setActivePlayer(getOtherPlayer(activePlayer));
         } else {
             throw new EmptyHouseException();
         }

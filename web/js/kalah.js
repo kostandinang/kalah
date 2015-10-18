@@ -21,8 +21,7 @@ var Kalah = (function () {
     function createPlayers() {
         player1 = new Player(config.player1Name, 0);
         player2 = new Player(config.player2Name, 1);
-        activePlayer = player1;
-        Render.setActivePlayerLabel(activePlayer.name);
+        setCurrentPlayer(player1.id);
     }
 
     /**
@@ -118,10 +117,17 @@ var Kalah = (function () {
      * @param gameResponse
      */
     function updateGameState(gameResponse) {
-        var responseHouse = null;
-        gameResponse = JSON.parse(gameResponse);
-        var gameResponse = KalahFactory.buildGameResponseObject(gameResponse);
+        var gameResponse = KalahFactory.buildGameResponseObject(JSON.parse(gameResponse));
         setCurrentPlayer(gameResponse.currentPlayer);
+        updateHouseState(gameResponse);
+    }
+
+    /**
+     * Updates houses
+     * @param gameResponse
+     */
+    function updateHouseState(gameResponse) {
+        var responseHouse = null;
         for (var key in gameResponse.houses) {
             if (gameResponse.houses.hasOwnProperty(key)) {
                 responseHouse = gameResponse.houses[key];
@@ -140,7 +146,23 @@ var Kalah = (function () {
      * @returns {*}
      */
     function setCurrentPlayer(playerId) {
-        return (playerId == 0) ? player1 : player2;
+        activePlayer = (playerId == 0) ? player1 : player2;
+        Render.setActivePlayerLabel(activePlayer.name);
+        activateCurrentPlayerInputs(activePlayer);
+    }
+
+    /**
+     * Activate player houses
+     * @param player
+     */
+    function activateCurrentPlayerInputs(player) {
+        houses.forEach(function(house) {
+            if (house.player == player) {
+                Render.setActiveHouse(house.getDomElement());
+            } else {
+                Render.removeActiveHouse(house.getDomElement());
+            }
+        });
     }
 
     /**
