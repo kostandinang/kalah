@@ -9,7 +9,7 @@ var KalahFactory = (function () {
      * @param currentHouse
      * @returns {{}}
      */
-    this.buildStateObject = function (houses, players, activePlayer, currentHouse) {
+    this.buildGameRequestObject = function (houses, players, activePlayer, currentHouse) {
         var stateObject = {};
         var houseState = [];
         var playersState = [];
@@ -40,9 +40,26 @@ var KalahFactory = (function () {
         return stateObject;
     };
 
+    /**
+     * Builds game response object
+     * @param response
+     * @returns {GameResponse}
+     */
+    this.buildGameResponseObject = function(response) {
+        return new GameResponse(
+            response["houses"],
+            response["current_player"],
+            response["winner"],
+            response["message"]
+        );
+    };
+
     return {
-        buildStateObject: function(houses, players, activePlayer, currentHouse) {
-            return buildStateObject(houses, players, activePlayer, currentHouse);
+        buildGameRequestObject: function(houses, players, activePlayer, currentHouse) {
+            return buildGameRequestObject(houses, players, activePlayer, currentHouse);
+        },
+        buildGameResponseObject: function(response) {
+            return buildGameResponseObject(response);
         }
     }
 })();

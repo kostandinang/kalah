@@ -28,13 +28,9 @@ public class Kalah {
      * @param inputGame Input Game
      * @return Game Output Game
      */
-    public static Game getNextGame(Game inputGame) {
+    public static Game getNextGame(Game inputGame) throws EmptyHouseException {
         game = inputGame;
-        try {
-            sowSeeds(game);
-        } catch (EmptyHouseException e) {
-            e.printStackTrace();
-        }
+        sowSeeds(game);
         return game;
     }
 

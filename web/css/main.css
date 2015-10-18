@@ -127,6 +127,24 @@ form {
     box-shadow: inset 0px 0px 1px 2px #ffbb6f;
 }
 
+.right-board>div.seed-number {
+    position: relative;
+    top: 0;
+    bottom: 0;
+    margin-left: -60px;
+    margin-top: 225px;
+    font-size: 40px;
+}
+
+.left-board>div.seed-number {
+    position: relative;
+    top: 0;
+    bottom: 0;
+    margin-left: 178px;
+    margin-top: 220px;
+    font-size: 40px;
+}
+
 /* Game Graphics */
 .seed {
     width: 30px !important;

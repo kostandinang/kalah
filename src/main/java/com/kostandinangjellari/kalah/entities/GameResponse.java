@@ -1,5 +1,7 @@
 package com.kostandinangjellari.kalah.entities;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.HashMap;
 
 /**
@@ -12,8 +14,11 @@ import java.util.HashMap;
 public class GameResponse {
 
     private HashMap<Long, House> houses;
+    @SerializedName("current_player")
     private long currentPlayerId;
+    @SerializedName("winner")
     private long winnerPlayerId;
+    private String message;
 
     public GameResponse(HashMap<Long, House> houses, long currentPlayerId, long winnerPlayerId) {
         this.houses = houses;
@@ -43,5 +48,13 @@ public class GameResponse {
 
     public void setWinnerPlayerId(long winnerPlayerId) {
         this.winnerPlayerId = winnerPlayerId;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
