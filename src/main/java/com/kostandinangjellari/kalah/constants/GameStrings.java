@@ -9,5 +9,5 @@ package com.kostandinangjellari.kalah.constants;
 
 public class GameStrings {
     public static String JSON_PARSE_ERROR = "Could not parse Json !";
-    public static String INVALID_MOVE_EXCEPTION = "Invalid Move !";
+    public static String EMPTY_HOUSE_EXCEPTION = "Empty House !";
 }

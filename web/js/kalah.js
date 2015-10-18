@@ -67,7 +67,7 @@ var Kalah = (function () {
             currentHouse = house;
             activePlayer = currentHouse.player;
             /**
-             * Next Move
+             * Get Next Move
              */
             Rest.getNextGameState(KalahFactory.buildStateObject(houses, [player1, player2], activePlayer, currentHouse));
             /*deactivatePits(houses.topPits);

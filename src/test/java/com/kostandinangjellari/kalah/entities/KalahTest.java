@@ -15,9 +15,9 @@ public class KalahTest {
 
     @Test
     public void testGetNextGame() throws Exception {
-        Player player1 = new Player("Kostandin", 0);
-        Player player2 = new Player("Kostandin's Opponent", 1);
-        Assert.assertTrue(Kalah.isOtherPlayerKalah(player1, new House(0, 5, player2.getId(), true)));
+        Game testGame = getTestGame();
+        Game outputGame = Kalah.getNextGame(testGame);
+        Assert.assertNotNull(outputGame);
     }
 
     @Test
@@ -41,28 +41,28 @@ public class KalahTest {
      */
     private Game getTestGame() {
         //Pits
-        HashMap<Long, House> pits = new HashMap<>();
-        pits.put(1l, new House(1, 6, 0, false));
-        pits.put(2l, new House(2, 6, 0, false));
-        pits.put(3l, new House(3, 6, 0, false));
-        pits.put(4l, new House(4, 6, 0, false));
-        pits.put(5l, new House(5, 6, 0, false));
-        pits.put(6l, new House(6, 6, 0, false));
-        pits.put(7l, new House(7, 0, 0, true));
-        pits.put(8l, new House(8, 6, 1, false));
-        pits.put(9l, new House(9, 6, 1, false));
-        pits.put(10l, new House(10, 6, 1, false));
-        pits.put(11l, new House(11, 6, 1, false));
-        pits.put(12l, new House(12, 6, 1, false));
-        pits.put(13l, new House(13, 6, 1, false));
-        pits.put(14l, new House(14, 0, 1, true));
+        HashMap<Long, House> houses = new HashMap<>();
+        houses.put(1l, new House(1, 15, 0, false));
+        houses.put(2l, new House(2, 6, 0, false));
+        houses.put(3l, new House(3, 6, 0, false));
+        houses.put(4l, new House(4, 6, 0, false));
+        houses.put(5l, new House(5, 6, 0, false));
+        houses.put(6l, new House(6, 6, 0, false));
+        houses.put(7l, new House(7, 0, 0, true));
+        houses.put(8l, new House(8, 0, 1, false));
+        houses.put(9l, new House(9, 6, 1, false));
+        houses.put(10l, new House(10, 6, 1, false));
+        houses.put(11l, new House(11, 6, 1, false));
+        houses.put(12l, new House(12, 6, 1, false));
+        houses.put(13l, new House(13, 6, 1, false));
+        houses.put(14l, new House(14, 0, 1, true));
         //Players
         Player player1 = new Player("Kostandin", 0);
         Player player2 = new Player("Opponent", 1);
         //Game
-        Game game = new Game(player1, player2, pits);
+        Game game = new Game(player1, player2, houses);
         game.setActivePlayer(player1);
-        game.setCurrentHouse(pits.get(9l));
+        game.setCurrentHouse(houses.get(1l));
         return game;
     }
 }

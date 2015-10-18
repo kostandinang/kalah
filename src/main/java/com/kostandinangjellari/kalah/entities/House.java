@@ -62,7 +62,7 @@ public class House {
     }
 
     public long getSeeds() {
-        return seeds;
+        return this.seeds;
     }
 
     public void setSeeds(long seeds) {
@@ -75,6 +75,16 @@ public class House {
 
     public void setIsKalah(boolean isKalah) {
         this.isKalah = isKalah;
+    }
+
+    public long addSeed() {
+        ++this.seeds;
+        return this.seeds;
+    }
+
+    public long removeSeed() {
+        --this.seeds;
+        return this.seeds;
     }
 
     /**

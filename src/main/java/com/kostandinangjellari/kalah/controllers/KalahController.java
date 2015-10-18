@@ -21,7 +21,7 @@ public class KalahController {
      */
     public static GameResponse next(GameRequest gameRequest) {
         GameResponse gameResponse = null;
-        Game game = initGameFromGameState(gameRequest);
+        Game game = initGameFromGameRequest(gameRequest);
         /**
          * Get next game state
          */
@@ -30,7 +30,13 @@ public class KalahController {
         return gameResponse;
     }
 
-    private static Game initGameFromGameState(GameRequest gameRequest) {
+    /**
+     * Initializes Game from Game Request object
+     *
+     * @param gameRequest
+     * @return Game
+     */
+    private static Game initGameFromGameRequest(GameRequest gameRequest) {
         Game game;
         /**
          * Get Pits
