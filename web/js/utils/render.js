@@ -36,6 +36,31 @@ var Render = (function() {
     }
 
     /**
+     * Sets house attribute as active
+     * @param houseNode
+     */
+    function setActiveHouse(houseNode) {
+        if (houseNode) houseNode.setAttribute("active", "active");
+    }
+
+    /**
+     * Removes house attribute as active
+     * @param houseNode
+     */
+    function removeActiveHouse(houseNode) {
+        if (houseNode) houseNode.removeAttribute("active");
+    }
+
+    /**
+     * Checks if node has active attribute
+     * @param houseNode
+     * @returns {boolean}
+     */
+    function hasActiveAttribute(houseNode) {
+        return (houseNode.getAttribute("active"));
+    }
+
+    /**
      * Sets Active Player Label
      * @param playerName
      */
@@ -55,6 +80,15 @@ var Render = (function() {
         },
         setActivePlayerLabel: function(name) {
             setActivePlayerLabel(name);
+        },
+        setActiveHouse: function(houseNode) {
+            setActiveHouse(houseNode);
+        },
+        removeActiveHouse: function(houseNode) {
+            removeActiveHouse(houseNode);
+        },
+        hasActiveAttribute: function(houseNode) {
+            return hasActiveAttribute(houseNode);
         }
     }
 })();

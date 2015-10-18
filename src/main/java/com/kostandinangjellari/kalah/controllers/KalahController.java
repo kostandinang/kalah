@@ -20,14 +20,16 @@ public class KalahController {
      * @return next game state json configuration
      */
     public static GameResponse next(GameRequest gameRequest) {
-        GameResponse gameResponse = null;
         Game game = initGameFromGameRequest(gameRequest);
         /**
          * Get next game state
          */
         game = Kalah.getNextGame(game);
-        //TODO - Generate gameOutputJson
-        return gameResponse;
+        return getGameResponseFromCurretGame(game);
+    }
+
+    private static GameResponse getGameResponseFromCurretGame(Game game) {
+        return new GameResponse(game.getHouses(), game.getActivePlayer().getId(), -1l);
     }
 
     /**

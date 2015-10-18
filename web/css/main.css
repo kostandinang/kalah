@@ -123,7 +123,7 @@ form {
     border-radius: 100% !important;
 }
 
-.top-center-board>div:hover, .bottom-center-board>div:hover {
+.top-center-board>div[active]:hover, .bottom-center-board>div[active]:hover {
     box-shadow: inset 0px 0px 1px 2px #ffbb6f;
 }
 

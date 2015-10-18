@@ -60,30 +60,34 @@ var Kalah = (function () {
         var playerHouse = new House(houseIndex, player, isKalah);
         houses.push(playerHouse);
         /**
+         * Activate houses for current Plyer
+         */
+        if (player == activePlayer) {
+            Render.setActiveHouse(playerHouse.getDomElement());
+        }
+        /**
          * Add house mouse listener
          */
         playerHouse.addMouseListener(function (house) {
-            console.log(house.id);
-            currentHouse = house;
-            activePlayer = currentHouse.player;
-            /**
-             * Get Next Move
-             */
-            Rest.getNextGameState(KalahFactory.buildStateObject(houses, [player1, player2], activePlayer, currentHouse));
-            /*deactivatePits(houses.topPits);
-             activateHouses(houses.bottomPits);*/
+            if (isHouseActive(house)) {
+                currentHouse = house;
+                activePlayer = currentHouse.player;
+                /**
+                 * Get Next Game State
+                 */
+                var gameState = KalahFactory.buildStateObject(houses, [player1, player2], activePlayer, currentHouse);
+                Rest.getNextGameState(
+                    gameState,
+                    function(response) {
+
+                    },
+                    function(response) {
+
+                    }
+                );
+            }
         });
         return playerHouse;
-    }
-
-    //TODO - Check
-    function activateHouses(player) {
-        for (var key in pitPlacement) {
-            var pit = pitPlacement[key];
-            if (!pit.isKalah & !pit.isEmpty()) {
-                pit.addEventListener();
-            }
-        }
     }
 
     /**
@@ -102,6 +106,15 @@ var Kalah = (function () {
         seedIndicatorElement = Render.createHouseSeedIndicator(houseDomElement, house.getSeeds());
         houseDomElement.appendChild(Render.createSeedElement());
         houseDomElement.appendChild(seedIndicatorElement);
+    }
+
+    /**
+     * Checks if house is active
+     * @param house
+     * @returns {*}
+     */
+    function isHouseActive(house) {
+        return Render.hasActiveAttribute(house.getDomElement());
     }
 
     return {

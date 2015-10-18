@@ -1,6 +1,6 @@
 package com.kostandinangjellari.kalah.entities;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Title: kalah
@@ -11,21 +11,21 @@ import java.util.ArrayList;
 
 public class GameResponse {
 
-    private ArrayList<House> houses;
+    private HashMap<Long, House> houses;
     private long currentPlayerId;
     private long winnerPlayerId;
 
-    public GameResponse(ArrayList<House> houses, long currentPlayerId, long winnerPlayerId) {
+    public GameResponse(HashMap<Long, House> houses, long currentPlayerId, long winnerPlayerId) {
         this.houses = houses;
         this.currentPlayerId = currentPlayerId;
         this.winnerPlayerId = winnerPlayerId;
     }
 
-    public ArrayList<House> getHouses() {
+    public HashMap<Long, House> getHouses() {
         return houses;
     }
 
-    public void setHouses(ArrayList<House> houses) {
+    public void setHouses(HashMap<Long, House> houses) {
         this.houses = houses;
     }
 
