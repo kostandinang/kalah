@@ -35,5 +35,6 @@ window.onload = function () {
         seedsSelect.setAttribute("disabled", "disabled");
         p1Input.setAttribute("disabled", "disabled");
         p2Input.setAttribute("disabled", "disabled");
+        gameInputs.style.display = "none";
     }
 };

@@ -54,7 +54,7 @@ var Render = (function() {
      * @param playerName
      */
     function setActivePlayerLabel(playerName) {
-        Utils.byId(Constants.PLAYER_TURN_LABEL).innerHTML = playerName;
+        Utils.byId(Constants.PLAYER_TURN_LABEL).innerHTML = Constants.ACTIVE_PLAYER + playerName;
     }
 
     return {

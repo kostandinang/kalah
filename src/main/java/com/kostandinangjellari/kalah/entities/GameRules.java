@@ -12,10 +12,10 @@ import com.kostandinangjellari.kalah.exceptions.EmptyHouseException;
 import com.kostandinangjellari.kalah.exceptions.GameOverException;
 
 /**
- * Kalah processes game rules and logic and
+ * GameRules processes game rules and logic and
  * calculates next game state
  */
-public class Kalah {
+public class GameRules {
 
     private static Game game;
 
@@ -41,13 +41,13 @@ public class Kalah {
      */
     public static void sowSeeds(Game game) throws EmptyHouseException, GameOverException {
         Player activePlayer = game.getActivePlayer();
-        Player outputActivePlayer = null;
         House currentHouse = game.getCurrentHouse();
         long numOfSeeds = currentHouse.getSeeds();
-        long houseCount = 1;
         long startHouseId = currentHouse.getId();
+        long houseCount = 1;
         House nextHouse;
         long nextHouseId;
+        Player outputActivePlayer;
         /**
          * Set other player as active player
          */
@@ -87,7 +87,7 @@ public class Kalah {
                     } else
                     /**
                      * Remove all other seeds and other player
-                     * parallel seeds and send it to active player Kalah
+                     * parallel seeds and send it to active player GameRules
                      */
                     if (nextHouse.isEmptyHouse() && !getOtherPlayerParallellHouse(nextHouse, activePlayer).isEmptyHouse()) {
                         seedIntoPlayerKalah(nextHouse, activePlayer);
@@ -96,6 +96,9 @@ public class Kalah {
                         break;
                     }
                 }
+                /**
+                 * Update current and next house
+                 */
                 houseCount++;
                 nextHouse.addSeed();
                 currentHouse.removeSeed();
@@ -138,7 +141,7 @@ public class Kalah {
 
     /**
      * Removes seeds from player house and parallell
-     * other player house and seeds them into player's Kalah
+     * other player house and seeds them into player's GameRules
      *
      * @param house
      * @param player
@@ -184,7 +187,7 @@ public class Kalah {
     }
 
     /**
-     * Checks if this house is Kalah of the opponent
+     * Checks if this house is GameRules of the opponent
      *
      * @param currentPlayer
      * @param house
@@ -205,7 +208,7 @@ public class Kalah {
     }
 
     /**
-     * Gets player Kalah
+     * Gets player GameRules
      *
      * @param player
      * @return

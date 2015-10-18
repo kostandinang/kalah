@@ -17,6 +17,7 @@ var Constants = (function() {
         },
         REST_URL: "rest/play",
         ERROR_MESSAGE: "Server Connection Error !",
-        GAME_OVER_MESSAGE: "Game Over !"
+        GAME_OVER_MESSAGE: "Game Over !",
+        ACTIVE_PLAYER: "Active Player: "
     }
 })();

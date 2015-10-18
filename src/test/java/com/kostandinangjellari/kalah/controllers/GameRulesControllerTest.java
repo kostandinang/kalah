@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
  * Copyright 2015
  */
 
-public class KalahControllerTest {
+public class GameRulesControllerTest {
 
     @Test
     public void testNext() throws Exception {
